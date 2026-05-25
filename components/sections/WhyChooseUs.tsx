@@ -46,7 +46,7 @@ export default function WhyChooseUs() {
       className="
       relative overflow-hidden
 
-      py-28 lg:py-36
+      py-24 lg:py-32
 
       bg-gradient-to-br
       from-[#071739]
@@ -243,7 +243,7 @@ export default function WhyChooseUs() {
 
             max-w-2xl mx-auto
 
-            text-lg sm:text-xl
+            text-base sm:text-lg
 
             text-white/70
 
@@ -260,18 +260,16 @@ export default function WhyChooseUs() {
 
         {/* CARDS */}
 
-        {/* CARDS */}
+        <div
+          className="
+          mt-16
 
-<div
-  className="
-  mt-20
+          grid grid-cols-2
+          lg:grid-cols-4
 
-  grid grid-cols-2
-  lg:grid-cols-4
-
-  gap-4 sm:gap-6
-"
->
+          gap-4 sm:gap-6
+        "
+        >
 
           {items.map((item, i) => (
 
@@ -308,9 +306,9 @@ export default function WhyChooseUs() {
 
                 relative overflow-hidden
 
-                h-full min-h-[310px]
+                h-full min-h-[240px] sm:min-h-[260px]
 
-                rounded-[36px]
+                rounded-[32px]
 
                 bg-gradient-to-b
                 from-white/[0.09]
@@ -320,7 +318,7 @@ export default function WhyChooseUs() {
 
                 backdrop-blur-3xl
 
-                p-8
+                p-5 sm:p-6
 
                 flex flex-col
                 justify-between
@@ -371,9 +369,10 @@ export default function WhyChooseUs() {
 
                   <div
                     className="
-                    w-[72px] h-[72px]
+                    w-[58px] h-[58px]
+                    sm:w-[64px] sm:h-[64px]
 
-                    rounded-[26px]
+                    rounded-[22px]
 
                     bg-gradient-to-br
                     from-white
@@ -392,7 +391,7 @@ export default function WhyChooseUs() {
 
                     <FontAwesomeIcon
                       icon={item.icon}
-                      className={`${item.color} text-2xl`}
+                      className={`${item.color} text-xl sm:text-2xl`}
                     />
 
                   </div>
@@ -401,11 +400,13 @@ export default function WhyChooseUs() {
 
                 {/* CONTENT */}
 
-                <div className="relative z-10 mt-12">
+                <div className="relative z-10 mt-7">
 
                   <h3
                     className="
-                    text-[26px]
+                    text-[18px]
+                    sm:text-[22px]
+                    lg:text-[24px]
 
                     font-bold
 
@@ -417,13 +418,13 @@ export default function WhyChooseUs() {
 
                   <p
                     className="
-                    mt-5
+                    mt-3
 
                     text-white/65
 
                     leading-relaxed
 
-                    text-sm
+                    text-xs sm:text-sm
                   "
                   >
                     Providing compassionate,
@@ -440,7 +441,7 @@ export default function WhyChooseUs() {
                   className="
                   relative z-10
 
-                  mt-10
+                  mt-6
 
                   flex items-center gap-3
                 "
