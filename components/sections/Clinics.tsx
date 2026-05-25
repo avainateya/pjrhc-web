@@ -208,7 +208,7 @@ export default function Clinics() {
 
           gap-5 lg:gap-8
 
-          items-start
+          items-stretch
         "
         >
 
@@ -241,154 +241,175 @@ export default function Clinics() {
               }}
 
               className={`
-group
-
-relative overflow-hidden
-
-rounded-[36px]
-
-bg-gradient-to-br
-from-blue-200/30
-via-white/40
-to-yellow-100/20
-
-p-[1px]
-
-h-full
-
-shadow-[0_25px_80px_rgba(0,0,0,0.12)]
-
-transition-all duration-500
-
-${
-  i === 2
-    ? "col-span-2 md:col-span-1 w-full md:w-auto"
-    : ""
-}
-`}            >
-
-              {/* GLOW */}
+              ${
+                i === 2
+                  ? "col-span-2 md:col-span-1 flex justify-center"
+                  : ""
+              }
+            `}
+            >
 
               <div
                 className="
-                absolute inset-0
+                group
 
-                opacity-0 group-hover:opacity-100
-
-                transition duration-700
-
-                bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.18),transparent_50%)]
-              "
-              />
-
-              {/* CARD */}
-
-              <div
-                className="
-                relative z-10
-
-                h-full
-
-                bg-white/75
-
-                backdrop-blur-2xl
+                relative overflow-hidden
 
                 rounded-[36px]
 
-                overflow-hidden
+                bg-gradient-to-br
+                from-blue-200/30
+                via-white/40
+                to-yellow-100/20
 
-                border border-white/40
+                p-[1px]
+
+                h-full w-full
+
+                shadow-[0_25px_80px_rgba(0,0,0,0.12)]
+
+                transition-all duration-500
+
+                ${
+                  i === 2
+                    ? "max-w-[48%] sm:max-w-[49%] md:max-w-none"
+                    : ""
+                }
               "
               >
 
-                {/* MAP */}
+                {/* GLOW */}
 
-                <div className="relative">
+                <div
+                  className="
+                  absolute inset-0
 
-                  <iframe
-                    src={clinic.embed}
+                  opacity-0 group-hover:opacity-100
 
-                    className="
-                    w-full h-64
+                  transition duration-700
 
-                    border-0
+                  bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.18),transparent_50%)]
+                "
+                />
 
-                    grayscale-[0.15]
+                {/* CARD */}
 
-                    group-hover:grayscale-0
+                <div
+                  className="
+                  relative z-10
 
-                    transition duration-700
-                  "
+                  h-full
 
-                    loading="lazy"
-                  />
+                  bg-white/75
 
-                  {/* OVERLAY */}
+                  backdrop-blur-2xl
+
+                  rounded-[36px]
+
+                  overflow-hidden
+
+                  border border-white/40
+
+                  flex flex-col
+                "
+                >
+
+                  {/* MAP */}
+
+                  <div className="relative">
+
+                    <iframe
+                      src={clinic.embed}
+
+                      className="
+                      w-full h-64
+
+                      border-0
+
+                      grayscale-[0.15]
+
+                      group-hover:grayscale-0
+
+                      transition duration-700
+                    "
+
+                      loading="lazy"
+                    />
+
+                    {/* OVERLAY */}
+
+                    <div
+                      className="
+                      absolute inset-0
+
+                      bg-gradient-to-t
+                      from-black/50
+                      via-black/10
+                      to-transparent
+                    "
+                    />
+
+                    {/* MAP BUTTON */}
+
+                    <a
+                      href={clinic.link}
+
+                      target="_blank"
+
+                      className="
+                      absolute bottom-5 left-1/2
+
+                      -translate-x-1/2
+
+                      px-5 py-2.5
+
+                      rounded-full
+
+                      bg-white/90
+
+                      backdrop-blur-xl
+
+                      text-blue-900
+
+                      text-sm font-semibold
+
+                      border border-white/60
+
+                      shadow-xl
+
+                      hover:scale-105
+
+                      transition-all duration-300
+                    "
+                    >
+                      View in Maps
+                    </a>
+
+                  </div>
+
+                  {/* CONTENT */}
 
                   <div
                     className="
-                    absolute inset-0
+                    p-7 text-center
 
-                    bg-gradient-to-t
-                    from-black/50
-                    via-black/10
-                    to-transparent
-                  "
-                  />
-
-                  {/* MAP BUTTON */}
-
-                  <a
-                    href={clinic.link}
-
-                    target="_blank"
-
-                    className="
-                    absolute bottom-5 left-1/2
-
-                    -translate-x-1/2
-
-                    px-5 py-2.5
-
-                    rounded-full
-
-                    bg-white/90
-
-                    backdrop-blur-xl
-
-                    text-blue-900
-
-                    text-sm font-semibold
-
-                    border border-white/60
-
-                    shadow-xl
-
-                    hover:scale-105
-
-                    transition-all duration-300
+                    flex-1 flex items-center justify-center
                   "
                   >
-                    View in Maps
-                  </a>
 
-                </div>
+                    <h3
+                      className="
+                      text-2xl font-bold
 
-                {/* CONTENT */}
+                      text-blue-950
 
-                <div className="p-7 text-center">
+                      tracking-tight
+                    "
+                    >
+                      {clinic.name}
+                    </h3>
 
-                  <h3
-                    className="
-                    text-2xl font-bold
-
-                    text-blue-950
-
-                    tracking-tight
-                  "
-                  >
-                    {clinic.name}
-                  </h3>
+                  </div>
 
                 </div>
 
@@ -399,217 +420,6 @@ ${
           ))}
 
         </div>
-
-        {/* TIMINGS */}
-
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 40,
-          }}
-
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-
-          transition={{
-            duration: 0.8,
-          }}
-
-          viewport={{
-            once: true,
-          }}
-
-          className="
-          mt-24
-        "
-        >
-
-          <div
-            className="
-            relative overflow-hidden
-
-            rounded-[40px]
-
-            bg-white/70
-
-            backdrop-blur-2xl
-
-            border border-white/50
-
-            shadow-[0_25px_80px_rgba(0,0,0,0.08)]
-
-            p-8 lg:p-12
-          "
-          >
-
-            {/* GLOW */}
-
-            <div
-              className="
-              absolute inset-0
-
-              bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.08),transparent_55%)]
-
-              pointer-events-none
-            "
-            />
-
-            <div className="relative z-10">
-
-              {/* HEADER */}
-
-              <div className="text-center mb-12">
-
-                <div
-                  className="
-                  inline-flex items-center gap-2
-
-                  px-5 py-2
-
-                  rounded-full
-
-                  bg-blue-50
-
-                  border border-blue-100
-
-                  text-blue-800
-
-                  text-sm font-medium
-
-                  mb-6
-                "
-                >
-                  🕒 Consultation Schedule
-                </div>
-
-                <h3
-                  className="
-                  text-4xl lg:text-5xl
-
-                  font-black
-
-                  tracking-tight
-
-                  text-transparent bg-clip-text
-
-                  bg-gradient-to-r
-                  from-blue-950
-                  via-blue-800
-                  to-blue-950
-                "
-                >
-                  Clinic Timings
-                </h3>
-
-              </div>
-
-              {/* TABLE */}
-
-              <div
-                className="
-                overflow-hidden
-
-                rounded-[28px]
-
-                border border-blue-100
-              "
-              >
-
-                {/* TABLE HEADER */}
-
-                <div
-                  className="
-                  grid grid-cols-2
-
-                  bg-gradient-to-r
-                  from-blue-900
-                  to-blue-800
-
-                  text-white
-
-                  px-6 py-5
-
-                  font-semibold
-                "
-                >
-
-                  <div>Clinic</div>
-                  <div>Consultation Timings</div>
-
-                </div>
-
-                {/* ROWS */}
-
-                {[
-                  {
-                    name: "Rethibowli",
-                    time: "1:00 PM – 3:00 PM •7:00 PM – 9:00 PM",
-                  },
-
-                  {
-                    name: "Narsingi",
-                    time: "10:00 AM – 1:00 PM",
-                  },
-
-                  {
-                    name: "Kachiguda",
-                    time: "4:30 PM – 7:30 PM (Closed on Fridays)",
-                  },
-                ].map((item, i) => (
-
-                  <div
-                    key={i}
-
-                    className="
-                    grid grid-cols-1 md:grid-cols-2
-
-                    gap-2 md:gap-0
-
-                    px-6 py-5
-
-                    bg-white
-
-                    border-t border-blue-50
-
-                    hover:bg-blue-50/40
-
-                    transition-all
-                  "
-                  >
-
-                    <div
-                      className="
-                      font-semibold
-
-                      text-blue-950
-                    "
-                    >
-                      {item.name}
-                    </div>
-
-                    <div
-                      className="
-                      text-gray-600
-
-                      font-medium
-                    "
-                    >
-                      {item.time}
-                    </div>
-
-                  </div>
-
-                ))}
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </motion.div>
 
       </div>
 
