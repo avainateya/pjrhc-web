@@ -250,7 +250,7 @@ export default function Clinics() {
             >
 
               <div
-                className={'
+                className={`
                 group
 
                 relative overflow-hidden
@@ -275,7 +275,7 @@ export default function Clinics() {
                     ? "max-w-[48%] sm:max-w-[49%] md:max-w-none"
                     : ""
                 }
-              '}
+              `}
               >
 
                 {/* GLOW */}
