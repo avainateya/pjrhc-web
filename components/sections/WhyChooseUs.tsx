@@ -260,17 +260,18 @@ export default function WhyChooseUs() {
 
         {/* CARDS */}
 
-        <div
-          className="
-          mt-20
+        {/* CARDS */}
 
-          grid grid-cols-1
-          sm:grid-cols-2
-          lg:grid-cols-4
+<div
+  className="
+  mt-20
 
-          gap-6
-        "
-        >
+  grid grid-cols-2
+  lg:grid-cols-4
+
+  gap-4 sm:gap-6
+"
+>
 
           {items.map((item, i) => (
 
