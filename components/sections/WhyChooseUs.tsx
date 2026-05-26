@@ -47,7 +47,7 @@ export default function WhyChooseUs() {
 
   return (
     <section
-      id="why-choose-us"
+      id="why choose us"
       className="
       relative overflow-hidden
 
