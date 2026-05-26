@@ -63,7 +63,7 @@ export default function Header() {
 
       <div
         className="
-          hidden min-[800px]:block
+          hidden min-[900px]:block
 
           bg-white/85
 
@@ -198,11 +198,14 @@ export default function Header() {
                   className={`
                     relative
 
-                    text-[16px] xl:text-[17px]
+                    text-[15px]
+                    xl:text-[17px]
 
                     transition-all duration-300
 
                     hover:text-blue-700
+
+                    whitespace-nowrap
 
                     ${
                       active === id
@@ -254,9 +257,12 @@ export default function Header() {
 
                 text-[15px]
 
-                py-2.5 px-5
+                py-2.5
+                px-5
 
                 rounded-full
+
+                whitespace-nowrap
 
                 shadow-[0_10px_30px_rgba(37,99,235,0.25)]
 
@@ -271,7 +277,7 @@ export default function Header() {
 
       {/* MOBILE + TABLET NAVBAR */}
 
-      <div className="min-[800px]:hidden px-3 pt-3">
+      <div className="min-[900px]:hidden px-3 pt-3">
         <div
           className="
             flex items-center justify-between
