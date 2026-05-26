@@ -4,31 +4,126 @@ import { useState } from "react";
 
 export default function Appointments() {
 
-  const getSlots = (branch: string, date: string) => {
+  const filterPastTimes = (
+    selectedDate: string,
+    slots: string[]
+  ) => {
+    const now = new Date();
+
+    const today = now
+      .toISOString()
+      .split("T")[0];
+
+    if (selectedDate !== today) {
+      return slots;
+    }
+
+    return slots.filter((slot) => {
+
+      const [time, modifier] =
+        slot.split(" ");
+
+      let [hours, minutes] = time
+        .split(":")
+        .map(Number);
+
+      if (
+        modifier === "PM" &&
+        hours !== 12
+      ) {
+        hours += 12;
+      }
+
+      if (
+        modifier === "AM" &&
+        hours === 12
+      ) {
+        hours = 0;
+      }
+
+      const slotTime = new Date();
+
+      slotTime.setHours(
+        hours,
+        minutes,
+        0,
+        0
+      );
+
+      return slotTime > now;
+    });
+  };
+
+  const getSlots = (
+    branch: string,
+    date: string
+  ) => {
+
     if (!branch || !date) return [];
 
     const day = new Date(date).getDay();
 
     if (branch === "Online") {
-      return ["9:00 AM", "11:00 AM", "2:00 PM", "6:00 PM"];
+
+      return filterPastTimes(date, [
+        "9:00 AM",
+        "11:00 AM",
+        "2:00 PM",
+        "6:00 PM",
+      ]);
     }
 
     if (day === 0) {
+
       if (branch === "Retibowli") {
-        return ["6:00 PM", "7:00 PM", "8:00 PM"];
+
+        return filterPastTimes(date, [
+          "6:00 PM",
+          "7:00 PM",
+          "8:00 PM",
+        ]);
       }
+
       return [];
     }
 
-    if (day === 5 && branch === "Kachiguda") return [];
+    if (
+      day === 5 &&
+      branch === "Kachiguda"
+    ) {
+      return [];
+    }
 
-    const slotsByBranch: Record<string, string[]> = {
-      Narsing: ["10:30 AM", "11:30 AM", "12:30 PM"],
-      Retibowli: ["1:30 PM", "2:00 PM", "7:30 PM", "8:30 PM", "9:00 PM"],
-      Kachiguda: ["4:30 PM", "5:30 PM", "6:30 PM"],
+    const slotsByBranch: Record<
+      string,
+      string[]
+    > = {
+
+      Narsing: [
+        "10:30 AM",
+        "11:30 AM",
+        "12:30 PM",
+      ],
+
+      Retibowli: [
+        "1:30 PM",
+        "2:00 PM",
+        "7:30 PM",
+        "8:30 PM",
+        "9:00 PM",
+      ],
+
+      Kachiguda: [
+        "4:30 PM",
+        "5:30 PM",
+        "6:30 PM",
+      ],
     };
 
-    return slotsByBranch[branch] || [];
+    return filterPastTimes(
+      date,
+      slotsByBranch[branch] || []
+    );
   };
 
   const [form, setForm] = useState({
@@ -39,17 +134,23 @@ export default function Appointments() {
     branch: "",
   });
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] =
+    useState(false);
 
-  const [status, setStatus] = useState<
-    "idle" | "success" | "error"
-  >("idle");
+  const [status, setStatus] =
+    useState<
+      "idle" | "success" | "error"
+    >("idle");
 
   const [branchOpen, setBranchOpen] =
     useState(false);
 
   const [timeOpen, setTimeOpen] =
     useState(false);
+
+  const today = new Date()
+    .toISOString()
+    .split("T")[0];
 
   const branches = [
     "Narsing",
@@ -58,7 +159,10 @@ export default function Appointments() {
     "Online",
   ];
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (
+    e: any
+  ) => {
+
     e.preventDefault();
 
     if (
@@ -78,15 +182,19 @@ export default function Appointments() {
 
     try {
 
-      const res = await fetch("/api/appointments", {
-        method: "POST",
+      const res = await fetch(
+        "/api/appointments",
+        {
+          method: "POST",
 
-        headers: {
-          "Content-Type": "application/json",
-        },
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
 
-        body: JSON.stringify(form),
-      });
+          body: JSON.stringify(form),
+        }
+      );
 
       const data = await res.json();
 
@@ -107,6 +215,7 @@ export default function Appointments() {
         setTimeOpen(false);
 
       } else {
+
         setStatus("error");
       }
 
@@ -124,7 +233,10 @@ export default function Appointments() {
     <section
       id="appointment"
       className="
+      relative z-10
+
       py-24
+
       bg-gradient-to-br
       from-blue-950
       via-blue-900
@@ -135,11 +247,23 @@ export default function Appointments() {
 
         <div
           className="
-bg-gradient-to-br from-blue-950/90 via-blue-900/80 to-blue-950/90
+          relative
+
+          overflow-visible
+
+          bg-gradient-to-br
+          from-blue-950/90
+          via-blue-900/80
+          to-blue-950/90
+
           border border-yellow-400/10
+
           rounded-[36px]
+
           p-8 md:p-12
+
           backdrop-blur-2xl
+
           shadow-[0_20px_80px_rgba(0,0,0,0.5)]
         "
         >
@@ -151,13 +275,21 @@ bg-gradient-to-br from-blue-950/90 via-blue-900/80 to-blue-950/90
             <div
               className="
               inline-block
+
               px-4 py-1.5
+
               rounded-full
+
               bg-yellow-400/10
+
               border border-yellow-400/20
+
               text-yellow-300
+
               text-sm
+
               tracking-wide
+
               mb-4
             "
             >
@@ -167,9 +299,13 @@ bg-gradient-to-br from-blue-950/90 via-blue-900/80 to-blue-950/90
             <h2
               className="
               text-4xl sm:text-5xl
+
               font-bold
+
               text-transparent
+
               bg-clip-text
+
               bg-gradient-to-r
               from-yellow-200
               via-yellow-400
@@ -179,7 +315,15 @@ bg-gradient-to-br from-blue-950/90 via-blue-900/80 to-blue-950/90
               Book Appointment
             </h2>
 
-            <p className="text-white/70 mt-4 max-w-xl mx-auto">
+            <p
+              className="
+              text-white/70
+
+              mt-4
+
+              max-w-xl mx-auto
+            "
+            >
               Secure your appointment with our
               specialists in just a few clicks.
             </p>
@@ -190,7 +334,11 @@ bg-gradient-to-br from-blue-950/90 via-blue-900/80 to-blue-950/90
 
           <form
             onSubmit={handleSubmit}
-            className="grid gap-6 md:grid-cols-2"
+            className="
+            relative z-20
+
+            grid gap-6 md:grid-cols-2
+          "
           >
 
             {/* NAME */}
@@ -203,14 +351,21 @@ bg-gradient-to-br from-blue-950/90 via-blue-900/80 to-blue-950/90
               <input
                 className="
                 w-full mt-2 p-4 rounded-2xl
+
                 bg-blue-900
+
                 border border-blue-700
+
                 text-white
+
                 placeholder-white/50
+
                 hover:bg-blue-800
+
                 focus:outline-none
                 focus:ring-2
                 focus:ring-yellow-400/60
+
                 transition-all duration-300
               "
                 value={form.name}
@@ -234,14 +389,21 @@ bg-gradient-to-br from-blue-950/90 via-blue-900/80 to-blue-950/90
               <input
                 className="
                 w-full mt-2 p-4 rounded-2xl
+
                 bg-blue-900
+
                 border border-blue-700
+
                 text-white
+
                 placeholder-white/50
+
                 hover:bg-blue-800
+
                 focus:outline-none
                 focus:ring-2
                 focus:ring-yellow-400/60
+
                 transition-all duration-300
               "
                 value={form.phone}
@@ -257,129 +419,212 @@ bg-gradient-to-br from-blue-950/90 via-blue-900/80 to-blue-950/90
 
             {/* DATE */}
 
-           {/* DATE */}
+            <div>
+              <label className="text-sm text-white/80">
+                Appointment Date
+              </label>
 
-<div>
-  <label className="text-sm text-white/80">
-    Appointment Date
-  </label>
+              <div
+                className="
+                relative mt-2
 
-  <div className="relative mt-2">
+                rounded-2xl
 
-    <input
-      type="date"
-      min={
-        new Date()
-          .toISOString()
-          .split("T")[0]
-      }
-      className="
-      w-full p-4 rounded-2xl
-      bg-blue-900
-      border border-blue-700
-      text-white
-      focus:outline-none
-      focus:ring-2
-      focus:ring-yellow-400/60
-      hover:bg-blue-800
-      transition-all duration-300
+                overflow-hidden
+              "
+              >
+                <input
+                  type="date"
 
-      [color-scheme:dark]
-    "
-      value={form.date}
-      onChange={(e) =>
-        setForm({
-          ...form,
-          date: e.target.value,
-          time: "",
-        })
-      }
-    />
+                  min={today}
 
-    
+                  onClick={(e: any) => {
 
-  </div>
-</div>
+                    e.target.showPicker?.();
+
+                    setBranchOpen(false);
+
+                    setTimeOpen(false);
+                  }}
+
+                  className="
+                  w-full p-4 rounded-2xl
+
+                  bg-blue-900
+
+                  border border-blue-700
+
+                  text-white
+
+                  focus:outline-none
+                  focus:ring-2
+                  focus:ring-yellow-400/60
+
+                  hover:bg-blue-800
+
+                  transition-all duration-300
+
+                  cursor-pointer
+
+                  [color-scheme:dark]
+
+                  [&::-webkit-calendar-picker-indicator]:absolute
+                  [&::-webkit-calendar-picker-indicator]:right-4
+                  [&::-webkit-calendar-picker-indicator]:opacity-0
+                  [&::-webkit-calendar-picker-indicator]:cursor-pointer
+                  [&::-webkit-calendar-picker-indicator]:w-full
+                  [&::-webkit-calendar-picker-indicator]:h-full
+                "
+                  value={form.date}
+
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      date: e.target.value,
+                      time: "",
+                    })
+                  }
+                />
+
+                {/* ICON */}
+
+                <div
+                  className="
+                  absolute right-4 top-1/2
+                  -translate-y-1/2
+
+                  pointer-events-none
+
+                  text-white/70
+                "
+                >
+                  📅
+                </div>
+              </div>
+            </div>
 
             {/* BRANCH */}
 
-            <div className="relative">
+            <div className="relative z-50">
 
               <label className="text-sm text-white/80">
                 Select Branch
               </label>
 
               <div
-                onClick={() =>
-                  setBranchOpen(!branchOpen)
-                }
+                onClick={() => {
+
+                  setBranchOpen(
+                    !branchOpen
+                  );
+
+                  setTimeOpen(false);
+                }}
+
                 className="
                 mt-2 p-4 rounded-2xl
+
                 bg-blue-900
+
                 border border-blue-700
+
                 text-white
+
                 flex justify-between items-center
+
                 cursor-pointer
+
                 hover:bg-blue-800
+
                 hover:border-yellow-400/40
+
                 transition-all duration-300
               "
               >
-                {form.branch || "Choose branch"}
+                {form.branch ||
+                  "Choose branch"}
 
                 <span
-                  className={`transition-transform ${
-                    branchOpen
-                      ? "rotate-180"
-                      : ""
-                  }`}
+                  className={`
+                    transition-all duration-300
+
+                    ${
+                      branchOpen
+                        ? "rotate-180"
+                        : ""
+                    }
+                  `}
                 >
                   ▼
                 </span>
               </div>
 
-              {branchOpen && (
-                <div
-                  className="
-                  absolute z-50 w-full mt-2
-                  rounded-2xl
-                  overflow-hidden
-                  bg-blue-950
-                  border border-blue-800
-                  shadow-2xl
-                "
-                >
-                  {branches.map((b) => (
-                    <div
-                      key={b}
-                      onClick={() => {
-                        setForm({
-                          ...form,
-                          branch: b,
-                          time: "",
-                        });
+              <div
+                className={`
+                absolute z-[100] w-full mt-2
 
-                        setBranchOpen(false);
-                      }}
-                      className="
-                      px-5 py-4
-                      text-white
-                      hover:bg-blue-800
-                      hover:text-yellow-300
-                      cursor-pointer
-                      transition-all duration-300
-                    "
-                    >
-                      {b}
-                    </div>
-                  ))}
-                </div>
-              )}
+                max-h-[260px]
+
+                overflow-y-auto
+
+                rounded-2xl
+
+                bg-blue-950
+
+                border border-blue-800
+
+                shadow-2xl
+
+                transition-all duration-300
+
+                origin-top
+
+                ${
+                  branchOpen
+                    ? "opacity-100 scale-y-100 translate-y-0 pointer-events-auto"
+                    : "opacity-0 scale-y-95 -translate-y-2 pointer-events-none"
+                }
+              `}
+              >
+                {branches.map((b) => (
+
+                  <div
+                    key={b}
+
+                    onClick={() => {
+
+                      setForm({
+                        ...form,
+                        branch: b,
+                        time: "",
+                      });
+
+                      setBranchOpen(false);
+                    }}
+
+                    className="
+                    px-5 py-4
+
+                    text-white
+
+                    hover:bg-blue-800
+
+                    hover:text-yellow-300
+
+                    cursor-pointer
+
+                    transition-all duration-300
+                  "
+                  >
+                    {b}
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* TIME SLOT */}
 
-            <div className="md:col-span-2 relative">
+            <div className="md:col-span-2 relative z-40">
 
               <label className="text-sm text-white/80">
                 Time Slot
@@ -387,20 +632,33 @@ bg-gradient-to-br from-blue-950/90 via-blue-900/80 to-blue-950/90
 
               <div
                 onClick={() => {
+
                   if (
                     form.branch &&
                     form.date
                   ) {
-                    setTimeOpen(!timeOpen);
+
+                    setTimeOpen(
+                      !timeOpen
+                    );
+
+                    setBranchOpen(false);
                   }
                 }}
+
                 className={`
                 mt-2 p-4 rounded-2xl
+
                 bg-blue-900
+
                 border border-blue-700
+
                 text-white
+
                 flex justify-between items-center
+
                 transition-all duration-300
+
                 ${
                   !form.branch ||
                   !form.date
@@ -413,88 +671,134 @@ bg-gradient-to-br from-blue-950/90 via-blue-900/80 to-blue-950/90
                   "Select Time Slot"}
 
                 <span
-                  className={`transition-transform ${
-                    timeOpen
-                      ? "rotate-180"
-                      : ""
-                  }`}
+                  className={`
+                    transition-all duration-300
+
+                    ${
+                      timeOpen
+                        ? "rotate-180"
+                        : ""
+                    }
+                  `}
                 >
                   ▼
                 </span>
               </div>
 
-              {timeOpen && (
-                <div
-                  className="
-                  absolute z-50 w-full mt-2
-                  rounded-2xl
-                  overflow-hidden
-                  bg-blue-950
-                  border border-blue-800
-                  shadow-2xl
-                "
-                >
-                  {getSlots(
+              <div
+                className={`
+                absolute z-[100] w-full mt-2
+
+                max-h-[260px]
+
+                overflow-y-auto
+
+                rounded-2xl
+
+                bg-blue-950
+
+                border border-blue-800
+
+                shadow-2xl
+
+                transition-all duration-300
+
+                origin-top
+
+                ${
+                  timeOpen
+                    ? "opacity-100 scale-y-100 translate-y-0 pointer-events-auto"
+                    : "opacity-0 scale-y-95 -translate-y-2 pointer-events-none"
+                }
+              `}
+              >
+                {getSlots(
+                  form.branch,
+                  form.date
+                ).length === 0 ? (
+
+                  <div
+                    className="
+                    px-5 py-4
+
+                    text-white/50
+                  "
+                  >
+                    No slots available
+                  </div>
+
+                ) : (
+
+                  getSlots(
                     form.branch,
                     form.date
-                  ).length === 0 ? (
+                  ).map((slot) => (
 
-                    <div className="px-5 py-4 text-white/50">
-                      No slots available
+                    <div
+                      key={slot}
+
+                      onClick={() => {
+
+                        setForm({
+                          ...form,
+                          time: slot,
+                        });
+
+                        setTimeOpen(false);
+                      }}
+
+                      className="
+                      px-5 py-4
+
+                      text-white
+
+                      hover:bg-blue-800
+
+                      hover:text-yellow-300
+
+                      cursor-pointer
+
+                      transition-all duration-300
+                    "
+                    >
+                      {slot}
                     </div>
-
-                  ) : (
-
-                    getSlots(
-                      form.branch,
-                      form.date
-                    ).map((slot) => (
-
-                      <div
-                        key={slot}
-                        onClick={() => {
-                          setForm({
-                            ...form,
-                            time: slot,
-                          });
-
-                          setTimeOpen(false);
-                        }}
-                        className="
-                        px-5 py-4
-                        text-white
-                        hover:bg-blue-800
-                        hover:text-yellow-300
-                        cursor-pointer
-                        transition-all duration-300
-                      "
-                      >
-                        {slot}
-                      </div>
-                    ))
-                  )}
-                </div>
-              )}
+                  ))
+                )}
+              </div>
             </div>
 
             {/* BUTTON */}
 
             <button
               type="submit"
+
               disabled={loading}
+
               className="
               md:col-span-2 mt-4
-              py-4 rounded-full
+
+              py-4
+
+              rounded-full
+
               font-semibold text-lg
+
               text-blue-950
+
               bg-gradient-to-r
               from-yellow-400
               via-yellow-300
               to-yellow-400
+
               shadow-[0_15px_50px_rgba(255,215,0,0.35)]
+
               hover:scale-[1.02]
+
               hover:shadow-[0_20px_60px_rgba(255,215,0,0.45)]
+
               active:scale-[0.98]
+
               transition-all duration-300
             "
             >
@@ -504,139 +808,6 @@ bg-gradient-to-br from-blue-950/90 via-blue-900/80 to-blue-950/90
             </button>
 
           </form>
-
-          {/* SUCCESS */}
-
-          {status === "success" && (
-            <div className="mt-8 flex justify-center animate-fadeIn">
-
-              <div
-                className="
-                relative overflow-hidden
-                bg-gradient-to-br
-                from-blue-900
-                via-blue-800
-                to-blue-950
-                border border-yellow-400/20
-                rounded-[32px]
-                px-8 py-7
-                text-center
-                shadow-[0_20px_80px_rgba(0,0,0,0.6)]
-                backdrop-blur-2xl
-                max-w-lg w-full
-              "
-              >
-
-                <div
-                  className="
-                  absolute inset-0
-                  bg-gradient-to-r
-                  from-yellow-400/10
-                  via-transparent
-                  to-yellow-400/10
-                "
-                />
-
-                <div className="relative z-10 flex justify-center">
-
-                  <div
-                    className="
-                    w-20 h-20 rounded-full
-                    bg-gradient-to-br
-                    from-yellow-300
-                    to-yellow-500
-                    flex items-center justify-center
-                    shadow-[0_10px_40px_rgba(255,215,0,0.35)]
-                  "
-                  >
-                    <span className="text-4xl text-blue-950">
-                      ✓
-                    </span>
-                  </div>
-
-                </div>
-
-                <h3
-                  className="
-                  relative z-10
-                  mt-5
-                  text-2xl font-bold
-                  text-transparent
-                  bg-clip-text
-                  bg-gradient-to-r
-                  from-yellow-200
-                  via-yellow-400
-                  to-yellow-200
-                "
-                >
-                  Appointment Successfully Booked
-                </h3>
-
-                <p
-                  className="
-                  relative z-10
-                  text-white/80
-                  text-sm
-                  mt-3
-                  leading-relaxed
-                "
-                >
-                  Your appointment has been
-                  confirmed successfully.
-                  A confirmation message and
-                  booking details will be
-                  shared with you shortly.
-                </p>
-
-                <div
-                  className="
-                  relative z-10
-                  mt-5
-                  bg-white/5
-                  border border-white/10
-                  rounded-2xl
-                  p-4
-                "
-                >
-                  <p className="text-yellow-300 text-sm font-medium">
-                    ✨ Thank you for choosing
-                    our clinic
-                  </p>
-
-                  <p className="text-white/60 text-xs mt-1">
-                    Please arrive 10 minutes
-                    before your appointment
-                    time.
-                  </p>
-                </div>
-
-              </div>
-
-            </div>
-          )}
-
-          {/* ERROR */}
-
-          {status === "error" && (
-            <div className="mt-6 text-center">
-
-              <div
-                className="
-                inline-flex items-center gap-2
-                bg-red-500/10
-                border border-red-400/20
-                text-red-300
-                px-5 py-3
-                rounded-2xl
-              "
-              >
-                ❌ Something went wrong.
-                Please try again.
-              </div>
-
-            </div>
-          )}
-
         </div>
       </div>
     </section>
