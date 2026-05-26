@@ -47,11 +47,11 @@ export default function WhyChooseUs() {
 
   return (
     <section
-      id="why choose us"
+      id="why-choose-us"
       className="
       relative overflow-hidden
 
-      py-28 lg:py-36
+      py-20 sm:py-28 lg:py-36
 
       bg-gradient-to-br
       from-[#06152f]
@@ -194,50 +194,50 @@ export default function WhyChooseUs() {
 
           {/* TITLE */}
 
-     <h2
-  className="
-  text-[42px]
-  sm:text-6xl
-  lg:text-7xl
+          <h2
+            className="
+            text-[42px]
+            sm:text-6xl
+            lg:text-7xl
 
-  font-extrabold
+            font-extrabold
 
-  leading-[1.2]
+            leading-[1.2]
 
-  pb-4
-"
->
-  <span
-    className="
-    block
+            pb-4
+          "
+          >
+            <span
+              className="
+              block
 
-    bg-gradient-to-b
-    from-white
-    to-blue-100
+              bg-gradient-to-b
+              from-white
+              to-blue-100
 
-    bg-clip-text
-    text-transparent
-  "
-  >
-    Thoughtful
-  </span>
+              bg-clip-text
+              text-transparent
+            "
+            >
+              Thoughtful
+            </span>
 
-  <span
-    className="
-    block mt-2 sm:mt-4
+            <span
+              className="
+              block mt-2 sm:mt-4
 
-    bg-gradient-to-r
-    from-yellow-200
-    via-yellow-400
-    to-yellow-200
+              bg-gradient-to-r
+              from-yellow-200
+              via-yellow-400
+              to-yellow-200
 
-    bg-clip-text
-    text-transparent
-  "
-  >
-    Care & Healing
-  </span>
-</h2>
+              bg-clip-text
+              text-transparent
+            "
+            >
+              Care & Healing
+            </span>
+          </h2>
 
           {/* DESCRIPTION */}
 
@@ -259,21 +259,20 @@ export default function WhyChooseUs() {
           </p>
         </motion.div>
 
-        {/* CARDS */}
+        {/* TABLET + DESKTOP */}
 
-        {/* CARDS */}
+        <div
+          className="
+          hidden md:grid
 
-<div
-  className="
-  mt-20
+          md:grid-cols-2
+          xl:grid-cols-4
 
-  grid grid-cols-2
-  lg:grid-cols-4
+          gap-5 lg:gap-7
 
-  gap-4 sm:gap-6
-"
->
-
+          mt-16 sm:mt-20
+        "
+        >
           {items.map((item, i) => (
             <motion.div
               key={i}
@@ -302,7 +301,7 @@ export default function WhyChooseUs() {
 
                 relative overflow-hidden
 
-                h-full min-h-[310px]
+                min-h-[420px]
 
                 rounded-[36px]
 
@@ -355,11 +354,13 @@ export default function WhyChooseUs() {
 
                 {/* icon */}
 
-                  <div
-                    className="
-                    w-[72px] h-[72px]
+                <div
+                  className="
+                  relative z-10
 
-                    rounded-[26px]
+                  w-[72px] h-[72px]
+
+                  rounded-[24px]
 
                   bg-white
 
@@ -369,30 +370,25 @@ export default function WhyChooseUs() {
 
                   group-hover:scale-105
 
-                    transition duration-500
-                  "
-                  >
-
-                    <FontAwesomeIcon
-                      icon={item.icon}
-                      className={`${item.color} text-2xl`}
-                    />
-
-                  </div>
-
+                  transition duration-500
+                "
+                >
+                  <FontAwesomeIcon
+                    icon={item.icon}
+                    className={`${item.iconColor} text-[30px]`}
+                  />
                 </div>
 
                 {/* CONTENT */}
 
-                <div className="relative z-10 mt-12">
-
+                <div className="relative z-10 mt-8 flex-1 flex flex-col">
                   <h3
                     className="
-                    text-[26px]
+                    text-[24px]
+
+                    font-bold
 
                     leading-[1.15]
-
-                    tracking-[-0.03em]
                   "
                   >
                     {item.title}
@@ -414,15 +410,15 @@ export default function WhyChooseUs() {
 
                   <p
                     className="
-                    mt-3
+                    mt-5
 
-                    text-[15px]
+                    text-sm
 
                     leading-[1.8]
 
                     text-white/72
 
-                    text-sm
+                    flex-1
                   "
                   >
                     {item.desc}
@@ -434,8 +430,6 @@ export default function WhyChooseUs() {
                 <div
                   className="
                   relative z-10
-
-                  mt-10
 
                   flex items-center gap-3
 
@@ -587,8 +581,6 @@ export default function WhyChooseUs() {
                       font-black
 
                       leading-[1.08]
-
-                      tracking-[-0.03em]
                     "
                     >
                       {item.title}
