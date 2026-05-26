@@ -155,27 +155,7 @@ export default function Doctor() {
 
               {/* FLOATING DECOR */}
 
-              <div
-                className="
-                hidden sm:block
-
-                absolute
-
-                -top-5 -right-5
-
-                w-16 h-16
-
-                rounded-2xl
-
-                bg-white/70
-
-                backdrop-blur-xl
-
-                border border-white/50
-
-                shadow-xl
-              "
-              />
+             
 
               {/* MAIN FRAME */}
 

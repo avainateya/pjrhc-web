@@ -4,102 +4,109 @@ import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
-  faUserMd,
+  faUserDoctor,
   faLeaf,
-  faHandsHelping,
-  faClinicMedical,
+  faHandsHoldingCircle,
+  faHospital,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function WhyChooseUs() {
-
   const items = [
     {
       title: "20+ Years Experience",
-      icon: faUserMd,
-      color: "text-blue-500",
+      icon: faUserDoctor,
+      iconColor: "text-blue-500",
+      accent: "bg-blue-400",
+      desc: "Trusted homoeopathic expertise with decades of compassionate patient care.",
     },
 
     {
       title: "Holistic Healing",
       icon: faLeaf,
-      color: "text-emerald-400",
+      iconColor: "text-emerald-400",
+      accent: "bg-emerald-400",
+      desc: "Natural wellness-focused treatments that support complete mind and body balance.",
     },
 
     {
       title: "Personalized Care",
-      icon: faHandsHelping,
-      color: "text-yellow-400",
+      icon: faHandsHoldingCircle,
+      iconColor: "text-yellow-400",
+      accent: "bg-yellow-400",
+      desc: "Every consultation and treatment plan is tailored carefully for each patient.",
     },
 
     {
       title: "3 Clinic Branches",
-      icon: faClinicMedical,
-      color: "text-violet-400",
+      icon: faHospital,
+      iconColor: "text-violet-400",
+      accent: "bg-violet-400",
+      desc: "Accessible healthcare services across multiple trusted clinic locations.",
     },
   ];
 
   return (
-
     <section
       id="why choose us"
-
       className="
       relative overflow-hidden
 
-      py-24 lg:py-32
+      py-28 lg:py-36
 
       bg-gradient-to-br
-      from-[#071739]
-      via-[#0B2A63]
-      to-[#103B87]
+      from-[#06152f]
+      via-[#0a2c67]
+      to-[#0d3b87]
 
       text-white
     "
     >
-
-      {/* BACKGROUND LIGHTS */}
-
-      <div
-        className="
-        absolute top-[-200px] left-[-180px]
-
-        w-[500px] h-[500px]
-
-        bg-blue-400/20
-
-        blur-[120px]
-
-        rounded-full
-      "
-      />
-
-      <div
-        className="
-        absolute bottom-[-220px] right-[-180px]
-
-        w-[500px] h-[500px]
-
-        bg-yellow-300/10
-
-        blur-[120px]
-
-        rounded-full
-      "
-      />
-
       {/* GRID */}
 
       <div
         className="
         absolute inset-0
 
-        opacity-[0.03]
+        opacity-[0.04]
 
         bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)]
 
-        bg-[size:90px_90px]
+        bg-[size:55px_55px]
+        sm:bg-[size:90px_90px]
       "
       />
+
+      {/* GLOWS */}
+
+      <div
+        className="
+        absolute top-[-180px] left-[-180px]
+
+        w-[420px] h-[420px]
+
+        bg-blue-500/20
+
+        rounded-full
+
+        blur-[120px]
+      "
+      />
+
+      <div
+        className="
+        absolute bottom-[-180px] right-[-180px]
+
+        w-[420px] h-[420px]
+
+        bg-yellow-400/10
+
+        rounded-full
+
+        blur-[120px]
+      "
+      />
+
+      {/* CONTENT */}
 
       <div
         className="
@@ -107,45 +114,40 @@ export default function WhyChooseUs() {
 
         max-w-7xl mx-auto
 
-        px-6 md:px-12 lg:px-20
+        px-4 sm:px-8 lg:px-16
       "
       >
-
-        {/* TOP SECTION */}
+        {/* TOP */}
 
         <motion.div
           initial={{
             opacity: 0,
             y: 20,
           }}
-
           whileInView={{
             opacity: 1,
             y: 0,
           }}
-
           transition={{
-            duration: 0.8,
+            duration: 0.7,
           }}
-
           viewport={{
             once: true,
           }}
-
           className="text-center"
         >
-
           {/* BADGE */}
 
           <div
             className="
             inline-flex items-center gap-3
 
-            px-5 py-3
+            px-4 py-2.5
+            sm:px-5 sm:py-3
 
             rounded-full
 
-            bg-white/[0.06]
+            bg-white/[0.07]
 
             border border-white/10
 
@@ -154,10 +156,12 @@ export default function WhyChooseUs() {
             mb-8
           "
           >
-
             <div
               className="
-              w-10 h-10 rounded-full
+              w-9 h-9
+              sm:w-10 sm:h-10
+
+              rounded-full
 
               bg-gradient-to-br
               from-yellow-300
@@ -166,12 +170,10 @@ export default function WhyChooseUs() {
               flex items-center justify-center
             "
             >
-
               <FontAwesomeIcon
                 icon={faLeaf}
-                className="text-[#071739] text-sm"
+                className="text-[#071739] text-xs"
               />
-
             </div>
 
             <span
@@ -182,173 +184,161 @@ export default function WhyChooseUs() {
 
               tracking-[0.25em]
 
-              text-[11px]
+              text-[9px]
+              sm:text-[11px]
             "
             >
               Why Patients Trust Us
             </span>
-
           </div>
 
           {/* TITLE */}
 
-          <h2
-            className="
-            text-5xl sm:text-6xl lg:text-7xl
+     <h2
+  className="
+  text-[42px]
+  sm:text-6xl
+  lg:text-7xl
 
-            font-black
+  font-extrabold
 
-            leading-[1.08]
+  leading-[1.2]
 
-            tracking-[-0.06em]
-          "
-          >
+  pb-4
+"
+>
+  <span
+    className="
+    block
 
-            <span
-              className="
-              block
+    bg-gradient-to-b
+    from-white
+    to-blue-100
 
-              text-transparent bg-clip-text
+    bg-clip-text
+    text-transparent
+  "
+  >
+    Thoughtful
+  </span>
 
-              bg-gradient-to-b
-              from-white
-              to-blue-100
-            "
-            >
-              Thoughtful
-            </span>
+  <span
+    className="
+    block mt-2 sm:mt-4
 
-            <span
-              className="
-              block mt-3
+    bg-gradient-to-r
+    from-yellow-200
+    via-yellow-400
+    to-yellow-200
 
-              text-transparent bg-clip-text
-
-              bg-gradient-to-r
-              from-yellow-200
-              via-yellow-400
-              to-yellow-200
-            "
-            >
-              Care & Healing
-            </span>
-
-          </h2>
+    bg-clip-text
+    text-transparent
+  "
+  >
+    Care & Healing
+  </span>
+</h2>
 
           {/* DESCRIPTION */}
 
           <p
             className="
-            mt-8
+            mt-6
 
             max-w-2xl mx-auto
 
-            text-base sm:text-lg
+            text-lg sm:text-xl
 
             text-white/70
 
             leading-relaxed
           "
           >
-            Delivering trusted homoeopathic
-            care through compassionate
-            consultations, holistic wellness,
-            and years of expertise.
+            Delivering trusted homoeopathic care through compassionate
+            consultations, holistic wellness, and years of expertise.
           </p>
-
         </motion.div>
 
         {/* CARDS */}
 
-        <div
-          className="
-          mt-16
+        {/* CARDS */}
 
-          grid grid-cols-2
-          lg:grid-cols-4
+<div
+  className="
+  mt-20
 
-          gap-4 sm:gap-6
-        "
-        >
+  grid grid-cols-2
+  lg:grid-cols-4
+
+  gap-4 sm:gap-6
+"
+>
 
           {items.map((item, i) => (
-
             <motion.div
               key={i}
-
               initial={{
                 opacity: 0,
                 y: 30,
               }}
-
               whileInView={{
                 opacity: 1,
                 y: 0,
               }}
-
               transition={{
                 duration: 0.6,
                 delay: i * 0.1,
               }}
-
               viewport={{
                 once: true,
               }}
-
               whileHover={{
                 y: -10,
               }}
             >
-
               <div
                 className="
                 group
 
                 relative overflow-hidden
 
-                h-full min-h-[240px] sm:min-h-[260px]
+                h-full min-h-[310px]
 
-                rounded-[32px]
+                rounded-[36px]
 
-                bg-gradient-to-b
-                from-white/[0.09]
-                to-white/[0.04]
+                bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))]
 
-                border border-white/10
+                border border-blue-400/20
 
-                backdrop-blur-3xl
+                backdrop-blur-2xl
 
-                p-5 sm:p-6
+                p-8
 
                 flex flex-col
-                justify-between
 
-                shadow-[0_25px_80px_rgba(0,0,0,0.22)]
+                shadow-[0_15px_60px_rgba(0,0,0,0.28)]
 
-                hover:-translate-y-2
-                hover:border-yellow-300/20
+                hover:border-blue-300/40
 
                 transition-all duration-500
               "
               >
-
-                {/* GLOW */}
+                {/* glow */}
 
                 <div
                   className="
                   absolute inset-0
 
-                  opacity-0 group-hover:opacity-100
-
-                  bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.12),transparent_55%)]
+                  opacity-0
+                  group-hover:opacity-100
 
                   transition duration-500
 
-                  pointer-events-none
+                  bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.18),transparent_55%)]
                 "
                 />
 
-                {/* TOP LIGHT */}
+                {/* top line */}
 
                 <div
                   className="
@@ -358,32 +348,26 @@ export default function WhyChooseUs() {
 
                   bg-gradient-to-r
                   from-transparent
-                  via-yellow-300/40
+                  via-blue-300/40
                   to-transparent
                 "
                 />
 
-                {/* ICON */}
-
-                <div className="relative z-10">
+                {/* icon */}
 
                   <div
                     className="
-                    w-[58px] h-[58px]
-                    sm:w-[64px] sm:h-[64px]
+                    w-[72px] h-[72px]
 
-                    rounded-[22px]
+                    rounded-[26px]
 
-                    bg-gradient-to-br
-                    from-white
-                    to-blue-100
+                  bg-white
 
-                    flex items-center justify-center
+                  flex items-center justify-center
 
-                    shadow-[0_15px_40px_rgba(255,255,255,0.12)]
+                  shadow-[0_10px_40px_rgba(255,255,255,0.16)]
 
-                    group-hover:scale-110
-                    group-hover:rotate-3
+                  group-hover:scale-105
 
                     transition duration-500
                   "
@@ -391,7 +375,7 @@ export default function WhyChooseUs() {
 
                     <FontAwesomeIcon
                       icon={item.icon}
-                      className={`${item.color} text-xl sm:text-2xl`}
+                      className={`${item.color} text-2xl`}
                     />
 
                   </div>
@@ -400,39 +384,49 @@ export default function WhyChooseUs() {
 
                 {/* CONTENT */}
 
-                <div className="relative z-10 mt-7">
+                <div className="relative z-10 mt-12">
 
                   <h3
                     className="
-                    text-[18px]
-                    sm:text-[22px]
-                    lg:text-[24px]
+                    text-[26px]
 
-                    font-bold
+                    leading-[1.15]
 
-                    leading-[1.25]
+                    tracking-[-0.03em]
                   "
                   >
                     {item.title}
                   </h3>
 
+                  {/* accent */}
+
+                  <div
+                    className={`
+                    mt-4
+
+                    h-[4px] w-10
+
+                    rounded-full
+
+                    ${item.accent}
+                  `}
+                  />
+
                   <p
                     className="
                     mt-3
 
-                    text-white/65
+                    text-[15px]
 
-                    leading-relaxed
+                    leading-[1.8]
 
-                    text-xs sm:text-sm
+                    text-white/72
+
+                    text-sm
                   "
                   >
-                    Providing compassionate,
-                    thoughtful, and trusted
-                    healthcare experiences
-                    tailored to every patient.
+                    {item.desc}
                   </p>
-
                 </div>
 
                 {/* FOOTER */}
@@ -441,47 +435,245 @@ export default function WhyChooseUs() {
                   className="
                   relative z-10
 
-                  mt-6
+                  mt-10
 
                   flex items-center gap-3
+
+                  pt-6
                 "
                 >
-
                   <div
                     className="
-                    h-[2px] w-14
+                    h-[3px] w-16
 
                     rounded-full
 
                     bg-gradient-to-r
                     from-yellow-300
-                    to-transparent
+                    to-yellow-300/10
                   "
                   />
 
                   <div
                     className="
-                    w-2 h-2
+                    w-3 h-3
 
                     rounded-full
 
                     bg-yellow-300
+
+                    shadow-[0_0_18px_rgba(255,215,0,0.8)]
                   "
                   />
 
+                  <div
+                    className="
+                    w-1.5 h-1.5
+
+                    rounded-full
+
+                    bg-yellow-300/70
+                  "
+                  />
                 </div>
-
               </div>
-
             </motion.div>
-
           ))}
-
         </div>
 
+        {/* MOBILE */}
+
+        <div
+          className="
+          md:hidden
+
+          mt-14
+
+          space-y-5
+        "
+        >
+          {items.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.5,
+                delay: i * 0.1,
+              }}
+              viewport={{
+                once: true,
+              }}
+            >
+              <div
+                className="
+                relative overflow-hidden
+
+                rounded-[28px]
+
+                bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))]
+
+                border border-blue-400/20
+
+                backdrop-blur-2xl
+
+                p-5
+
+                shadow-[0_10px_45px_rgba(0,0,0,0.24)]
+              "
+              >
+                {/* glow */}
+
+                <div
+                  className="
+                  absolute inset-0
+
+                  bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.14),transparent_55%)]
+                "
+                />
+
+                {/* top line */}
+
+                <div
+                  className="
+                  absolute top-0 left-0
+
+                  w-full h-[1px]
+
+                  bg-gradient-to-r
+                  from-transparent
+                  via-blue-300/40
+                  to-transparent
+                "
+                />
+
+                <div className="relative z-10 flex gap-4">
+                  {/* icon */}
+
+                  <div
+                    className="
+                    w-[72px] h-[72px]
+
+                    rounded-[24px]
+
+                    bg-white
+
+                    flex items-center justify-center
+
+                    shadow-[0_10px_35px_rgba(255,255,255,0.14)]
+
+                    shrink-0
+                  "
+                  >
+                    <FontAwesomeIcon
+                      icon={item.icon}
+                      className={`${item.iconColor} text-[28px]`}
+                    />
+                  </div>
+
+                  {/* content */}
+
+                  <div className="flex-1 min-w-0">
+                    <h3
+                      className="
+                      text-[22px]
+
+                      font-black
+
+                      leading-[1.08]
+
+                      tracking-[-0.03em]
+                    "
+                    >
+                      {item.title}
+                    </h3>
+
+                    {/* accent */}
+
+                    <div
+                      className={`
+                      mt-3
+
+                      h-[4px] w-10
+
+                      rounded-full
+
+                      ${item.accent}
+                    `}
+                    />
+
+                    <p
+                      className="
+                      mt-4
+
+                      text-[15px]
+
+                      leading-[1.7]
+
+                      text-white/72
+                    "
+                    >
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+
+                {/* footer */}
+
+                <div
+                  className="
+                  relative z-10
+
+                  flex items-center gap-2
+
+                  mt-5
+                "
+                >
+                  <div
+                    className="
+                    h-[3px] w-14
+
+                    rounded-full
+
+                    bg-gradient-to-r
+                    from-yellow-300
+                    to-yellow-300/10
+                  "
+                  />
+
+                  <div
+                    className="
+                    w-3 h-3
+
+                    rounded-full
+
+                    bg-yellow-300
+
+                    shadow-[0_0_18px_rgba(255,215,0,0.8)]
+                  "
+                  />
+
+                  <div
+                    className="
+                    w-1.5 h-1.5
+
+                    rounded-full
+
+                    bg-yellow-300/70
+                  "
+                  />
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
-
     </section>
-
   );
 }
