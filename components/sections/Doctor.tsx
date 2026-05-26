@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 
 export default function Doctor() {
-
   const highlights = [
     "20+ Years Experience",
     "Trusted by Thousands",
@@ -12,9 +11,8 @@ export default function Doctor() {
   ];
 
   return (
-
     <section
-    id="our physician"
+      id="our physician"
       className="
       relative overflow-hidden
 
@@ -26,7 +24,6 @@ export default function Doctor() {
       to-white
     "
     >
-
       {/* BACKGROUND GLOWS */}
 
       <div
@@ -80,7 +77,6 @@ export default function Doctor() {
         px-5 sm:px-6 md:px-12 lg:px-20
       "
       >
-
         <div
           className="
           flex flex-col lg:flex-row
@@ -90,7 +86,6 @@ export default function Doctor() {
           gap-14 lg:gap-24
         "
         >
-
           {/* LEFT SIDE */}
 
           <div
@@ -100,7 +95,6 @@ export default function Doctor() {
             flex justify-center lg:justify-center
           "
           >
-
             <div
               className="
               relative
@@ -110,7 +104,6 @@ export default function Doctor() {
               flex justify-center
             "
             >
-
               {/* BACK GLOW */}
 
               <div
@@ -153,10 +146,6 @@ export default function Doctor() {
               "
               />
 
-              {/* FLOATING DECOR */}
-
-             
-
               {/* MAIN FRAME */}
 
               <div
@@ -175,7 +164,6 @@ export default function Doctor() {
                 shadow-[0_35px_100px_rgba(0,0,0,0.14)]
               "
               >
-
                 <div
                   className="
                   relative overflow-hidden
@@ -189,14 +177,11 @@ export default function Doctor() {
                   border border-white/40
                 "
                 >
-
                   {/* IMAGE */}
 
                   <img
                     src="/doctor.jpg"
-
                     alt="Dr. P. Sri Ramana"
-
                     className="
                     w-[260px] h-[340px]
 
@@ -213,17 +198,9 @@ export default function Doctor() {
                     hover:scale-[1.03]
                   "
                   />
-
-                  
-
-                 
-
                 </div>
-
               </div>
-
             </div>
-
           </div>
 
           {/* RIGHT SIDE */}
@@ -237,7 +214,6 @@ export default function Doctor() {
             lg:pt-4
           "
           >
-
             {/* TOP BADGE */}
 
             <div
@@ -267,32 +243,36 @@ export default function Doctor() {
             {/* TITLE */}
 
             <h2
-              className="
-              text-4xl sm:text-5xl lg:text-6xl
+  className="
+  w-full
 
-              font-black
+  min-w-0
 
-              leading-[1.05]
+  text-center lg:text-left
 
-              tracking-[-0.04em]
+  text-[clamp(18px,4vw,72px)]
 
-              text-transparent bg-clip-text
+  font-black
 
-              bg-gradient-to-r
-              from-blue-950
-              via-blue-800
-              to-blue-950
+  leading-[1]
 
-              whitespace-nowrap
-            "
-            >
-              Dr. P. Sri Ramana
-            </h2>
+  tracking-[-0.06em]
 
+  text-transparent bg-clip-text
+
+  bg-gradient-to-r
+  from-blue-950
+  via-blue-800
+  to-blue-950
+
+  whitespace-nowrap
+"
+>
+  Dr. P. Sri Ramana
+</h2>
             {/* SUBTITLE */}
 
             <div className="mt-6">
-
               <p
                 className="
                 text-lg sm:text-xl
@@ -318,7 +298,6 @@ export default function Doctor() {
               >
                 Renowned Homoeopathy Practitioner
               </p>
-
             </div>
 
             {/* AWARD */}
@@ -342,7 +321,6 @@ export default function Doctor() {
               p-6
             "
             >
-
               <div
                 className="
                 absolute inset-y-0 left-0
@@ -380,7 +358,6 @@ export default function Doctor() {
                 to receive this prestigious recognition
                 for clinical excellence and patient care.
               </p>
-
             </div>
 
             {/* DESCRIPTION */}
@@ -416,12 +393,9 @@ export default function Doctor() {
               gap-4
             "
             >
-
               {highlights.map((item, i) => (
-
                 <div
                   key={i}
-
                   className="
                   flex items-center gap-3
 
@@ -442,7 +416,6 @@ export default function Doctor() {
                   transition-all duration-300
                 "
                 >
-
                   <div
                     className="
                     w-8 h-8
@@ -474,20 +447,15 @@ export default function Doctor() {
                   >
                     {item}
                   </p>
-
                 </div>
-
               ))}
-
             </div>
 
             {/* CTA */}
 
             <div className="mt-10">
-
               <a
                 href="#appointment"
-
                 className="
                 inline-flex items-center justify-center
 
@@ -515,16 +483,10 @@ export default function Doctor() {
               >
                 Book Consultation
               </a>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </section>
-
   );
 }

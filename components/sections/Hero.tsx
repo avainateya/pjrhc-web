@@ -95,7 +95,8 @@ export default function Hero() {
               className="
               inline-flex items-center gap-3
 
-              px-5 py-3
+              px-4 sm:px-5
+              py-3
 
               rounded-full
 
@@ -110,7 +111,7 @@ export default function Hero() {
             >
               <div
                 className="
-                w-10 h-10 rounded-full
+                w-9 h-9 sm:w-10 sm:h-10 rounded-full
 
                 bg-gradient-to-br
                 from-yellow-300
@@ -128,9 +129,9 @@ export default function Hero() {
 
                 uppercase
 
-                tracking-[0.25em]
+                tracking-[0.22em]
 
-                text-[11px]
+                text-[10px] sm:text-[11px]
               "
               >
                 Holistic Homoeopathy
@@ -141,15 +142,17 @@ export default function Hero() {
 
             <h1
               className="
-              text-[54px]
-              sm:text-[76px]
+              text-[42px]
+              xs:text-[50px]
+              sm:text-[68px]
+              md:text-[82px]
               lg:text-[108px]
 
               font-black
 
-              leading-[0.88]
+              leading-[0.9]
 
-              tracking-[-0.08em]
+              tracking-[-0.07em]
             "
             >
               <span
@@ -190,11 +193,11 @@ export default function Hero() {
 
             <p
               className="
-              mt-8
+              mt-7 sm:mt-8
 
               max-w-2xl
 
-              text-lg sm:text-xl
+              text-base sm:text-lg lg:text-xl
 
               leading-relaxed
 
@@ -214,9 +217,9 @@ export default function Hero() {
               className="
               flex flex-col sm:flex-row
 
-              gap-5
+              gap-4 sm:gap-5
 
-              mt-12
+              mt-10 sm:mt-12
             "
             >
               <a
@@ -224,7 +227,8 @@ export default function Hero() {
                 className="
                 group relative overflow-hidden
 
-                px-10 py-4
+                px-8 sm:px-10
+                py-4
 
                 rounded-2xl
 
@@ -236,6 +240,8 @@ export default function Hero() {
                 text-[#071739]
 
                 font-bold
+
+                text-sm sm:text-base
 
                 shadow-[0_20px_60px_rgba(255,215,0,0.28)]
 
@@ -264,7 +270,8 @@ export default function Hero() {
               <a
                 href="#services"
                 className="
-                px-10 py-4
+                px-8 sm:px-10
+                py-4
 
                 rounded-2xl
 
@@ -275,6 +282,8 @@ export default function Hero() {
                 backdrop-blur-xl
 
                 text-white font-medium
+
+                text-sm sm:text-base
 
                 hover:bg-white/[0.1]
 
@@ -297,7 +306,7 @@ export default function Hero() {
               className="
               relative overflow-hidden
 
-              rounded-[38px]
+              rounded-[32px] sm:rounded-[38px]
 
               bg-[#0B2555]/70
 
@@ -307,7 +316,7 @@ export default function Hero() {
 
               shadow-[0_35px_100px_rgba(0,0,0,0.28)]
 
-              p-6 lg:p-8
+              p-5 sm:p-6 lg:p-8
             "
             >
               {/* LIGHT */}
@@ -329,7 +338,7 @@ export default function Hero() {
                   className="
                   flex items-center justify-between
 
-                  mb-8
+                  mb-6 sm:mb-8
                 "
                 >
                   <div>
@@ -339,9 +348,9 @@ export default function Hero() {
 
                       uppercase
 
-                      tracking-[0.22em]
+                      tracking-[0.2em]
 
-                      text-[11px]
+                      text-[10px] sm:text-[11px]
                     "
                     >
                       Trusted Excellence
@@ -349,7 +358,7 @@ export default function Hero() {
 
                     <h3
                       className="
-                      text-2xl lg:text-3xl
+                      text-xl sm:text-2xl lg:text-3xl
 
                       font-black
 
@@ -362,122 +371,130 @@ export default function Hero() {
                 </div>
 
                 {/* STATS */}
-{/* STATS */}
 
-<div
-  className="
-  grid grid-cols-3
+                <div
+                  className="
+                  flex items-stretch justify-between
 
-  gap-4 lg:gap-5
-"
->
-  {[
-    {
-      value: "20+",
-      label: "Years",
-    },
+                  gap-3 sm:gap-5
+                "
+                >
+                  {[
+                    {
+                      value: "20+",
+                      label: "Years",
+                      width: "flex-[0.9]",
+                    },
 
-    {
-      value: "50K+",
-      label: "Patients",
-    },
+                    {
+                      value: "50K+",
+                      label: "Patients",
+                      width: "flex-[1.2]",
+                    },
 
-    {
-      value: "3",
-      label: "Clinics",
-    },
-  ].map((item, i) => (
-    <div
-      key={i}
-      className="
-      relative
+                    {
+                      value: "3",
+                      label: "Clinics",
+                      width: "flex-[0.9]",
+                    },
+                  ].map((item, i) => (
+                    <div
+                      key={i}
+                      className={`
+                        ${item.width}
 
-      rounded-[24px]
+                        relative
 
-      bg-[#081D46]/80
+                        rounded-[20px] sm:rounded-[24px]
 
-      border border-blue-400/10
+                        bg-[#081D46]/80
 
-      backdrop-blur-2xl
+                        border border-blue-400/10
 
-      px-4 py-6
+                        backdrop-blur-2xl
 
-      flex flex-col items-center justify-center
+                        px-2 sm:px-3
+                        py-5 sm:py-6
 
-      text-center
+                        min-w-0
 
-      hover:bg-[#09214f]
+                        flex flex-col items-center justify-center
 
-      transition-all duration-500
-    "
-    >
-      <div
-        className="
-        absolute inset-0
+                        text-center
 
-        bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.08),transparent_55%)]
+                        hover:bg-[#09214f]
 
-        pointer-events-none
-      "
-      />
+                        transition-all duration-500
+                      `}
+                    >
+                      <div
+                        className="
+                        absolute inset-0
 
-      <div
-        className="
-        relative z-10
+                        bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.08),transparent_55%)]
 
-        flex flex-col items-center
-      "
-      >
-        <h2
-  className="
-  w-full
+                        pointer-events-none
+                      "
+                      />
 
-  min-w-[90px]
+                      <div
+                        className="
+                        relative z-10
 
-  flex items-center justify-center
+                        flex flex-col items-center
 
-  text-center
+                        w-full
+                      "
+                      >
+                        <h2
+                          className="
+                          w-full
 
-  text-[34px]
-  sm:text-[38px]
-  lg:text-[42px]
+                          text-center
 
-  font-black
+                          text-[clamp(10px,4.2vw,28px)]
 
-  leading-none
+                          font-black
 
-  text-transparent bg-clip-text
+                          leading-none
 
-  bg-gradient-to-r
-  from-yellow-200
-  via-yellow-400
-  to-yellow-200
-"
->
-  {item.value}
-</h2>
+                          whitespace-nowrap
 
-        <p
-          className="
-          mt-3
+                          text-transparent bg-clip-text
 
-          text-[10px] sm:text-xs
+                          bg-gradient-to-r
+                          from-yellow-200
+                          via-yellow-400
+                          to-yellow-200
+                        "
+                        >
+                          {item.value}
+                        </h2>
 
-          uppercase
+                        <p
+                          className="
+                          mt-2 sm:mt-3
 
-          tracking-[0.18em]
+                          text-[8px]
+                          min-[380px]:text-[9px]
+                          sm:text-xs
 
-          text-white/65
+                          uppercase
 
-          leading-relaxed
-        "
-        >
-          {item.label}
-        </p>
-      </div>
-    </div>
-  ))}
-</div>              </div>
+                          tracking-[0.14em]
+
+                          text-white/65
+
+                          leading-relaxed
+                        "
+                        >
+                          {item.label}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
