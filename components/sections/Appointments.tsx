@@ -8,6 +8,7 @@ export default function Appointments() {
     selectedDate: string,
     slots: string[]
   ) => {
+
     const now = new Date();
 
     const today = now
@@ -233,9 +234,9 @@ export default function Appointments() {
     <section
       id="appointment"
       className="
-      relative z-10
+      relative overflow-hidden
 
-      py-24
+      py-24 lg:py-32
 
       bg-gradient-to-br
       from-blue-950
@@ -243,7 +244,53 @@ export default function Appointments() {
       to-blue-800
     "
     >
-      <div className="max-w-6xl mx-auto px-4">
+      {/* GLOWS */}
+
+      <div
+        className="
+        absolute top-[-200px] left-[-160px]
+
+        w-[420px] h-[420px]
+
+        bg-blue-400/20
+
+        blur-[120px]
+
+        rounded-full
+      "
+      />
+
+      <div
+        className="
+        absolute bottom-[-200px] right-[-160px]
+
+        w-[420px] h-[420px]
+
+        bg-yellow-300/10
+
+        blur-[120px]
+
+        rounded-full
+      "
+      />
+
+      {/* CONTAINER */}
+
+      <div
+        className="
+        relative z-10
+
+        w-full
+
+        px-5
+        sm:px-8
+        md:px-12
+        lg:px-20
+        xl:px-28
+        2xl:px-36
+        3xl:px-44
+      "
+      >
 
         <div
           className="
@@ -258,9 +305,13 @@ export default function Appointments() {
 
           border border-yellow-400/10
 
-          rounded-[36px]
+          rounded-[40px]
 
-          p-8 md:p-12
+          p-6
+          sm:p-8
+          md:p-10
+          lg:p-12
+          xl:p-14
 
           backdrop-blur-2xl
 
@@ -298,9 +349,11 @@ export default function Appointments() {
 
             <h2
               className="
-              text-4xl sm:text-5xl
+              text-[clamp(38px,5vw,68px)]
 
               font-bold
+
+              tracking-[-0.04em]
 
               text-transparent
 
@@ -321,7 +374,11 @@ export default function Appointments() {
 
               mt-4
 
-              max-w-xl mx-auto
+              max-w-2xl mx-auto
+
+              text-base sm:text-lg
+
+              leading-relaxed
             "
             >
               Secure your appointment with our
@@ -337,7 +394,7 @@ export default function Appointments() {
             className="
             relative z-20
 
-            grid gap-6 md:grid-cols-2
+            grid gap-5 lg:gap-6 md:grid-cols-2
           "
           >
 
@@ -352,15 +409,15 @@ export default function Appointments() {
                 className="
                 w-full mt-2 p-4 rounded-2xl
 
-                bg-blue-900
+                bg-blue-950/70
 
-                border border-blue-700
+                border border-blue-700/60
 
                 text-white
 
                 placeholder-white/50
 
-                hover:bg-blue-800
+                hover:bg-blue-900
 
                 focus:outline-none
                 focus:ring-2
@@ -390,15 +447,15 @@ export default function Appointments() {
                 className="
                 w-full mt-2 p-4 rounded-2xl
 
-                bg-blue-900
+                bg-blue-950/70
 
-                border border-blue-700
+                border border-blue-700/60
 
                 text-white
 
                 placeholder-white/50
 
-                hover:bg-blue-800
+                hover:bg-blue-900
 
                 focus:outline-none
                 focus:ring-2
@@ -450,9 +507,9 @@ export default function Appointments() {
                   className="
                   w-full p-4 rounded-2xl
 
-                  bg-blue-900
+                  bg-blue-950/70
 
-                  border border-blue-700
+                  border border-blue-700/60
 
                   text-white
 
@@ -460,7 +517,7 @@ export default function Appointments() {
                   focus:ring-2
                   focus:ring-yellow-400/60
 
-                  hover:bg-blue-800
+                  hover:bg-blue-900
 
                   transition-all duration-300
 
@@ -485,8 +542,6 @@ export default function Appointments() {
                     })
                   }
                 />
-
-                {/* ICON */}
 
                 <div
                   className="
@@ -524,9 +579,9 @@ export default function Appointments() {
                 className="
                 mt-2 p-4 rounded-2xl
 
-                bg-blue-900
+                bg-blue-950/70
 
-                border border-blue-700
+                border border-blue-700/60
 
                 text-white
 
@@ -534,7 +589,7 @@ export default function Appointments() {
 
                 cursor-pointer
 
-                hover:bg-blue-800
+                hover:bg-blue-900
 
                 hover:border-yellow-400/40
 
@@ -649,9 +704,9 @@ export default function Appointments() {
                 className={`
                 mt-2 p-4 rounded-2xl
 
-                bg-blue-900
+                bg-blue-950/70
 
-                border border-blue-700
+                border border-blue-700/60
 
                 text-white
 
@@ -663,7 +718,7 @@ export default function Appointments() {
                   !form.branch ||
                   !form.date
                     ? "opacity-50 cursor-not-allowed"
-                    : "cursor-pointer hover:bg-blue-800 hover:border-yellow-400/40"
+                    : "cursor-pointer hover:bg-blue-900 hover:border-yellow-400/40"
                 }
               `}
               >
@@ -780,7 +835,7 @@ export default function Appointments() {
 
               py-4
 
-              rounded-full
+              rounded-2xl
 
               font-semibold text-lg
 
@@ -793,7 +848,7 @@ export default function Appointments() {
 
               shadow-[0_15px_50px_rgba(255,215,0,0.35)]
 
-              hover:scale-[1.02]
+              hover:scale-[1.01]
 
               hover:shadow-[0_20px_60px_rgba(255,215,0,0.45)]
 

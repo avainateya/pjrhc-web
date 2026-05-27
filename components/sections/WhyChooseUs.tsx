@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Playfair_Display } from "next/font/google";
 
 import {
   faUserDoctor,
@@ -9,6 +10,11 @@ import {
   faHandsHoldingCircle,
   faHospital,
 } from "@fortawesome/free-solid-svg-icons";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+});
 
 export default function WhyChooseUs() {
   const items = [
@@ -25,7 +31,7 @@ export default function WhyChooseUs() {
       icon: faLeaf,
       iconColor: "text-emerald-400",
       accent: "bg-emerald-400",
-      desc: "Natural wellness-focused treatments that support complete mind and body balance.",
+      desc: "Natural wellness-focused treatments supporting complete mind and body wellness.",
     },
 
     {
@@ -33,7 +39,7 @@ export default function WhyChooseUs() {
       icon: faHandsHoldingCircle,
       iconColor: "text-yellow-400",
       accent: "bg-yellow-400",
-      desc: "Every consultation and treatment plan is tailored carefully for each patient.",
+      desc: "Every consultation and treatment plan is carefully tailored for every patient.",
     },
 
     {
@@ -41,7 +47,7 @@ export default function WhyChooseUs() {
       icon: faHospital,
       iconColor: "text-violet-400",
       accent: "bg-violet-400",
-      desc: "Accessible healthcare services across multiple trusted clinic locations.",
+      desc: "Accessible healthcare services across trusted clinic locations.",
     },
   ];
 
@@ -51,7 +57,7 @@ export default function WhyChooseUs() {
       className="
       relative overflow-hidden
 
-      py-20 sm:py-28 lg:py-36
+      py-28 lg:py-36
 
       bg-gradient-to-br
       from-[#06152f]
@@ -67,12 +73,11 @@ export default function WhyChooseUs() {
         className="
         absolute inset-0
 
-        opacity-[0.04]
+        opacity-[0.03]
 
         bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)]
 
-        bg-[size:55px_55px]
-        sm:bg-[size:90px_90px]
+        bg-[size:90px_90px]
       "
       />
 
@@ -112,28 +117,24 @@ export default function WhyChooseUs() {
         className="
         relative z-10
 
-        max-w-7xl mx-auto
+        w-full
 
-        px-4 sm:px-8 lg:px-16
+        px-5
+        sm:px-8
+        md:px-12
+        lg:px-20
+        xl:px-28
+        2xl:px-36
+        3xl:px-44
       "
       >
         {/* TOP */}
 
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.7,
-          }}
-          viewport={{
-            once: true,
-          }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
           className="text-center"
         >
           {/* BADGE */}
@@ -182,7 +183,7 @@ export default function WhyChooseUs() {
 
               uppercase
 
-              tracking-[0.25em]
+              tracking-[0.22em]
 
               text-[9px]
               sm:text-[11px]
@@ -196,15 +197,13 @@ export default function WhyChooseUs() {
 
           <h2
             className="
-            text-[42px]
-            sm:text-6xl
-            lg:text-7xl
+            leading-[0.95]
 
-            font-extrabold
+            tracking-[-0.04em]
 
-            leading-[1.2]
+            text-[clamp(40px,6vw,84px)]
 
-            pb-4
+            font-[800]
           "
           >
             <span
@@ -219,23 +218,27 @@ export default function WhyChooseUs() {
               text-transparent
             "
             >
-              Thoughtful
+              Trusted Care
             </span>
 
             <span
-              className="
-              block mt-2 sm:mt-4
+              className={`
+                block mt-2
 
-              bg-gradient-to-r
-              from-yellow-200
-              via-yellow-400
-              to-yellow-200
+                italic
 
-              bg-clip-text
-              text-transparent
-            "
+                bg-gradient-to-r
+                from-yellow-200
+                via-yellow-400
+                to-yellow-200
+
+                bg-clip-text
+                text-transparent
+
+                ${playfair.className}
+              `}
             >
-              Care & Healing
+              Excellence
             </span>
           </h2>
 
@@ -245,9 +248,9 @@ export default function WhyChooseUs() {
             className="
             mt-6
 
-            max-w-2xl mx-auto
+            max-w-3xl mx-auto
 
-            text-lg sm:text-xl
+            text-base sm:text-lg lg:text-xl
 
             text-white/70
 
@@ -255,45 +258,34 @@ export default function WhyChooseUs() {
           "
           >
             Delivering trusted homoeopathic care through compassionate
-            consultations, holistic wellness, and years of expertise.
+            consultations, holistic wellness, and years of medical expertise.
           </p>
         </motion.div>
 
-        {/* TABLET + DESKTOP */}
+        {/* CARDS */}
 
         <div
           className="
-          hidden md:grid
+          mt-16 lg:mt-20
 
-          md:grid-cols-2
+          grid
+          sm:grid-cols-2
           xl:grid-cols-4
 
           gap-5 lg:gap-7
-
-          mt-16 sm:mt-20
         "
         >
           {items.map((item, i) => (
             <motion.div
               key={i}
-              initial={{
-                opacity: 0,
-                y: 30,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{
                 duration: 0.6,
                 delay: i * 0.1,
               }}
-              viewport={{
-                once: true,
-              }}
-              whileHover={{
-                y: -10,
-              }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10 }}
             >
               <div
                 className="
@@ -301,7 +293,7 @@ export default function WhyChooseUs() {
 
                 relative overflow-hidden
 
-                min-h-[420px]
+                min-h-[360px]
 
                 rounded-[36px]
 
@@ -311,7 +303,7 @@ export default function WhyChooseUs() {
 
                 backdrop-blur-2xl
 
-                p-8
+                p-7 lg:p-8
 
                 flex flex-col
 
@@ -322,8 +314,6 @@ export default function WhyChooseUs() {
                 transition-all duration-500
               "
               >
-                {/* glow */}
-
                 <div
                   className="
                   absolute inset-0
@@ -337,22 +327,7 @@ export default function WhyChooseUs() {
                 "
                 />
 
-                {/* top line */}
-
-                <div
-                  className="
-                  absolute top-0 left-0
-
-                  w-full h-[1px]
-
-                  bg-gradient-to-r
-                  from-transparent
-                  via-blue-300/40
-                  to-transparent
-                "
-                />
-
-                {/* icon */}
+                {/* ICON */}
 
                 <div
                   className="
@@ -367,10 +342,6 @@ export default function WhyChooseUs() {
                   flex items-center justify-center
 
                   shadow-[0_10px_40px_rgba(255,255,255,0.16)]
-
-                  group-hover:scale-105
-
-                  transition duration-500
                 "
                 >
                   <FontAwesomeIcon
@@ -394,8 +365,6 @@ export default function WhyChooseUs() {
                     {item.title}
                   </h3>
 
-                  {/* accent */}
-
                   <div
                     className={`
                     mt-4
@@ -412,7 +381,7 @@ export default function WhyChooseUs() {
                     className="
                     mt-5
 
-                    text-sm
+                    text-[15px]
 
                     leading-[1.8]
 
@@ -423,243 +392,6 @@ export default function WhyChooseUs() {
                   >
                     {item.desc}
                   </p>
-                </div>
-
-                {/* FOOTER */}
-
-                <div
-                  className="
-                  relative z-10
-
-                  flex items-center gap-3
-
-                  pt-6
-                "
-                >
-                  <div
-                    className="
-                    h-[3px] w-16
-
-                    rounded-full
-
-                    bg-gradient-to-r
-                    from-yellow-300
-                    to-yellow-300/10
-                  "
-                  />
-
-                  <div
-                    className="
-                    w-3 h-3
-
-                    rounded-full
-
-                    bg-yellow-300
-
-                    shadow-[0_0_18px_rgba(255,215,0,0.8)]
-                  "
-                  />
-
-                  <div
-                    className="
-                    w-1.5 h-1.5
-
-                    rounded-full
-
-                    bg-yellow-300/70
-                  "
-                  />
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* MOBILE */}
-
-        <div
-          className="
-          md:hidden
-
-          mt-14
-
-          space-y-5
-        "
-        >
-          {items.map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{
-                opacity: 0,
-                y: 20,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.5,
-                delay: i * 0.1,
-              }}
-              viewport={{
-                once: true,
-              }}
-            >
-              <div
-                className="
-                relative overflow-hidden
-
-                rounded-[28px]
-
-                bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))]
-
-                border border-blue-400/20
-
-                backdrop-blur-2xl
-
-                p-5
-
-                shadow-[0_10px_45px_rgba(0,0,0,0.24)]
-              "
-              >
-                {/* glow */}
-
-                <div
-                  className="
-                  absolute inset-0
-
-                  bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.14),transparent_55%)]
-                "
-                />
-
-                {/* top line */}
-
-                <div
-                  className="
-                  absolute top-0 left-0
-
-                  w-full h-[1px]
-
-                  bg-gradient-to-r
-                  from-transparent
-                  via-blue-300/40
-                  to-transparent
-                "
-                />
-
-                <div className="relative z-10 flex gap-4">
-                  {/* icon */}
-
-                  <div
-                    className="
-                    w-[72px] h-[72px]
-
-                    rounded-[24px]
-
-                    bg-white
-
-                    flex items-center justify-center
-
-                    shadow-[0_10px_35px_rgba(255,255,255,0.14)]
-
-                    shrink-0
-                  "
-                  >
-                    <FontAwesomeIcon
-                      icon={item.icon}
-                      className={`${item.iconColor} text-[28px]`}
-                    />
-                  </div>
-
-                  {/* content */}
-
-                  <div className="flex-1 min-w-0">
-                    <h3
-                      className="
-                      text-[22px]
-
-                      font-black
-
-                      leading-[1.08]
-                    "
-                    >
-                      {item.title}
-                    </h3>
-
-                    {/* accent */}
-
-                    <div
-                      className={`
-                      mt-3
-
-                      h-[4px] w-10
-
-                      rounded-full
-
-                      ${item.accent}
-                    `}
-                    />
-
-                    <p
-                      className="
-                      mt-4
-
-                      text-[15px]
-
-                      leading-[1.7]
-
-                      text-white/72
-                    "
-                    >
-                      {item.desc}
-                    </p>
-                  </div>
-                </div>
-
-                {/* footer */}
-
-                <div
-                  className="
-                  relative z-10
-
-                  flex items-center gap-2
-
-                  mt-5
-                "
-                >
-                  <div
-                    className="
-                    h-[3px] w-14
-
-                    rounded-full
-
-                    bg-gradient-to-r
-                    from-yellow-300
-                    to-yellow-300/10
-                  "
-                  />
-
-                  <div
-                    className="
-                    w-3 h-3
-
-                    rounded-full
-
-                    bg-yellow-300
-
-                    shadow-[0_0_18px_rgba(255,215,0,0.8)]
-                  "
-                  />
-
-                  <div
-                    className="
-                    w-1.5 h-1.5
-
-                    rounded-full
-
-                    bg-yellow-300/70
-                  "
-                  />
                 </div>
               </div>
             </motion.div>

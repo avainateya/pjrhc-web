@@ -68,13 +68,21 @@ export default function Doctor() {
       "
       />
 
+      {/* CONTAINER */}
+
       <div
         className="
         relative z-10
 
-        max-w-7xl mx-auto
+        w-full
 
-        px-5 sm:px-6 md:px-12 lg:px-20
+        px-5
+        sm:px-8
+        md:px-12
+        lg:px-20
+        xl:px-28
+        2xl:px-36
+        3xl:px-44
       "
       >
         <div
@@ -90,9 +98,9 @@ export default function Doctor() {
 
           <div
             className="
-            w-full lg:w-1/2
+            w-full lg:flex-1
 
-            flex justify-center lg:justify-center
+            flex justify-center
           "
           >
             <div
@@ -189,6 +197,10 @@ export default function Doctor() {
 
                     lg:w-[420px] lg:h-[540px]
 
+                    xl:w-[460px] xl:h-[580px]
+
+                    2xl:w-[520px] 2xl:h-[660px]
+
                     object-cover
 
                     object-top
@@ -207,7 +219,11 @@ export default function Doctor() {
 
           <div
             className="
-            w-full lg:w-1/2
+            w-full
+
+            lg:flex-1
+
+            min-w-0
 
             text-center lg:text-left
 
@@ -243,33 +259,34 @@ export default function Doctor() {
             {/* TITLE */}
 
             <h2
-  className="
-  w-full
+              className="
+              w-full
 
-  min-w-0
+              min-w-0
 
-  text-center lg:text-left
+              text-center lg:text-left
 
-  text-[clamp(18px,4vw,72px)]
+              text-[clamp(20px,3.2vw,72px)]
 
-  font-black
+              font-black
 
-  leading-[1]
+              leading-[0.95]
 
-  tracking-[-0.06em]
+              tracking-[-0.04em]
 
-  text-transparent bg-clip-text
+              text-transparent bg-clip-text
 
-  bg-gradient-to-r
-  from-blue-950
-  via-blue-800
-  to-blue-950
+              bg-gradient-to-r
+              from-blue-950
+              via-blue-800
+              to-blue-950
 
-  whitespace-nowrap
-"
->
-  Dr. P. Sri Ramana
-</h2>
+              whitespace-nowrap
+            "
+            >
+              Dr. P. Sri Ramana
+            </h2>
+
             {/* SUBTITLE */}
 
             <div className="mt-6">

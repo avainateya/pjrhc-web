@@ -2,12 +2,22 @@
 
 import { motion } from "framer-motion";
 import { GiCaduceus } from "react-icons/gi";
+import { Playfair_Display } from "next/font/google";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+});
 
 export default function Hero() {
   return (
     <section
       className="
       relative overflow-hidden
+
+      min-h-screen
+
+      flex items-center
 
       bg-gradient-to-br
       from-[#071739]
@@ -16,8 +26,10 @@ export default function Hero() {
 
       text-white
 
-      pt-28 lg:pt-36
-      pb-20
+      py-20
+      sm:py-24
+      lg:py-16
+      xl:py-20
     "
     >
       {/* BACKGROUND LIGHTS */}
@@ -64,20 +76,31 @@ export default function Hero() {
       "
       />
 
+      {/* CONTAINER */}
+
       <div
         className="
         relative z-10
 
-        max-w-7xl mx-auto
+        w-full
 
-        px-6 md:px-12 lg:px-20
+        px-5
+        sm:px-8
+        md:px-12
+        lg:px-16
+        xl:px-24
+        2xl:px-32
       "
       >
         <div
           className="
-          grid lg:grid-cols-[1.05fr_0.95fr]
+          grid
 
-          gap-16 lg:gap-20
+          lg:grid-cols-[1.15fr_0.85fr]
+
+          gap-10
+          lg:gap-12
+          xl:gap-20
 
           items-center
         "
@@ -96,7 +119,7 @@ export default function Hero() {
               inline-flex items-center gap-3
 
               px-4 sm:px-5
-              py-3
+              py-2.5
 
               rounded-full
 
@@ -106,12 +129,12 @@ export default function Hero() {
 
               backdrop-blur-xl
 
-              mb-8
+              mb-6
             "
             >
               <div
                 className="
-                w-9 h-9 sm:w-10 sm:h-10 rounded-full
+                w-8 h-8 sm:w-9 sm:h-9 rounded-full
 
                 bg-gradient-to-br
                 from-yellow-300
@@ -120,7 +143,7 @@ export default function Hero() {
                 flex items-center justify-center
               "
               >
-                <GiCaduceus className="w-5 h-5 text-[#071739]" />
+                <GiCaduceus className="w-4 h-4 text-[#071739]" />
               </div>
 
               <span
@@ -131,10 +154,10 @@ export default function Hero() {
 
                 tracking-[0.22em]
 
-                text-[10px] sm:text-[11px]
+                text-[9px] sm:text-[10px]
               "
               >
-                Holistic Homoeopathy
+                Trusted Homoeopathic Care
               </span>
             </div>
 
@@ -142,17 +165,13 @@ export default function Hero() {
 
             <h1
               className="
-              text-[42px]
-              xs:text-[50px]
-              sm:text-[68px]
-              md:text-[82px]
-              lg:text-[108px]
-
-              font-black
-
               leading-[0.9]
 
-              tracking-[-0.07em]
+              tracking-[-0.045em]
+
+              text-[clamp(38px,6vw,108px)]
+
+              font-[800]
             "
             >
               <span
@@ -166,26 +185,40 @@ export default function Hero() {
                 to-blue-100
               "
               >
-                Care
-              </span>
-
-              <span className="block text-white">
-                That Feels
+                Trusted
               </span>
 
               <span
                 className="
                 block
 
-                text-transparent bg-clip-text
-
-                bg-gradient-to-r
-                from-yellow-200
-                via-yellow-400
-                to-yellow-200
+                text-white
               "
               >
-                Personal
+                Care That
+              </span>
+
+              <span
+                className={`
+                  block
+
+                  italic
+
+                  font-[600]
+
+                  tracking-[-0.03em]
+
+                  text-transparent bg-clip-text
+
+                  bg-gradient-to-r
+                  from-yellow-100
+                  via-yellow-300
+                  to-yellow-100
+
+                  ${playfair.className}
+                `}
+              >
+                Feels Personal
               </span>
             </h1>
 
@@ -193,22 +226,25 @@ export default function Hero() {
 
             <p
               className="
-              mt-7 sm:mt-8
+              mt-5
 
               max-w-2xl
 
-              text-base sm:text-lg lg:text-xl
+              text-sm
+              sm:text-base
+              lg:text-lg
+              xl:text-[20px]
 
               leading-relaxed
 
-              text-white/70
+              text-white/72
             "
             >
-              Bringing together trusted
-              homoeopathic expertise,
-              calm consultations, and
-              thoughtful healing designed
-              around every individual.
+              Providing trusted homoeopathic care
+              through personalized consultations,
+              natural healing, and compassionate
+              long-term treatment focused on every
+              individual’s well-being.
             </p>
 
             {/* BUTTONS */}
@@ -217,9 +253,9 @@ export default function Hero() {
               className="
               flex flex-col sm:flex-row
 
-              gap-4 sm:gap-5
+              gap-3 sm:gap-4
 
-              mt-10 sm:mt-12
+              mt-7
             "
             >
               <a
@@ -227,8 +263,8 @@ export default function Hero() {
                 className="
                 group relative overflow-hidden
 
-                px-8 sm:px-10
-                py-4
+                px-7 sm:px-9
+                py-3.5
 
                 rounded-2xl
 
@@ -263,15 +299,15 @@ export default function Hero() {
                 />
 
                 <span className="relative z-10">
-                  Book Appointment
+                  Book Consultation
                 </span>
               </a>
 
               <a
                 href="#services"
                 className="
-                px-8 sm:px-10
-                py-4
+                px-7 sm:px-9
+                py-3.5
 
                 rounded-2xl
 
@@ -290,9 +326,27 @@ export default function Hero() {
                 transition-all duration-500
               "
               >
-                Explore Services
+                Explore Treatments
               </a>
             </div>
+
+            {/* TRUST LINE */}
+
+            <p
+              className="
+              mt-4
+
+              text-sm sm:text-base
+
+              text-white/55
+
+              leading-relaxed
+            "
+            >
+              Trusted by thousands of patients for
+              compassionate and personalized
+              homoeopathic care.
+            </p>
           </motion.div>
 
           {/* RIGHT SIDE */}
@@ -301,12 +355,19 @@ export default function Hero() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1 }}
+            className="
+            w-full
+            max-w-[560px]
+            xl:max-w-[680px]
+
+            ml-auto
+          "
           >
             <div
               className="
               relative overflow-hidden
 
-              rounded-[32px] sm:rounded-[38px]
+              rounded-[30px]
 
               bg-[#0B2555]/70
 
@@ -316,7 +377,7 @@ export default function Hero() {
 
               shadow-[0_35px_100px_rgba(0,0,0,0.28)]
 
-              p-5 sm:p-6 lg:p-8
+              p-5 sm:p-6 lg:p-6 xl:p-7
             "
             >
               {/* LIGHT */}
@@ -334,40 +395,32 @@ export default function Hero() {
               <div className="relative z-10">
                 {/* HEADER */}
 
-                <div
-                  className="
-                  flex items-center justify-between
+                <div className="mb-5 sm:mb-6">
+                  <p
+                    className="
+                    text-yellow-300
 
-                  mb-6 sm:mb-8
-                "
-                >
-                  <div>
-                    <p
-                      className="
-                      text-yellow-300
+                    uppercase
 
-                      uppercase
+                    tracking-[0.2em]
 
-                      tracking-[0.2em]
+                    text-[10px]
+                  "
+                  >
+                    Trusted Excellence
+                  </p>
 
-                      text-[10px] sm:text-[11px]
-                    "
-                    >
-                      Trusted Excellence
-                    </p>
+                  <h3
+                    className="
+                    text-xl sm:text-2xl lg:text-[28px]
 
-                    <h3
-                      className="
-                      text-xl sm:text-2xl lg:text-3xl
+                    font-black
 
-                      font-black
-
-                      mt-2
-                    "
-                    >
-                      Clinic Information
-                    </h3>
-                  </div>
+                    mt-2
+                  "
+                  >
+                    Clinic Information
+                  </h3>
                 </div>
 
                 {/* STATS */}
@@ -376,26 +429,26 @@ export default function Hero() {
                   className="
                   flex items-stretch justify-between
 
-                  gap-3 sm:gap-5
+                  gap-3
                 "
                 >
                   {[
                     {
                       value: "20+",
-                      label: "Years",
-                      width: "flex-[0.9]",
+                      label: "Years Experience",
+                      width: "flex-[1]",
                     },
 
                     {
                       value: "50K+",
-                      label: "Patients",
+                      label: "Patients Treated",
                       width: "flex-[1.2]",
                     },
 
                     {
                       value: "3",
-                      label: "Clinics",
-                      width: "flex-[0.9]",
+                      label: "Branches",
+                      width: "flex-[1]",
                     },
                   ].map((item, i) => (
                     <div
@@ -405,7 +458,7 @@ export default function Hero() {
 
                         relative
 
-                        rounded-[20px] sm:rounded-[24px]
+                        rounded-[20px]
 
                         bg-[#081D46]/80
 
@@ -413,18 +466,13 @@ export default function Hero() {
 
                         backdrop-blur-2xl
 
-                        px-2 sm:px-3
-                        py-5 sm:py-6
+                        px-2 py-4 sm:py-5
 
                         min-w-0
 
                         flex flex-col items-center justify-center
 
                         text-center
-
-                        hover:bg-[#09214f]
-
-                        transition-all duration-500
                       `}
                     >
                       <div
@@ -452,7 +500,7 @@ export default function Hero() {
 
                           text-center
 
-                          text-[clamp(10px,4.2vw,28px)]
+                          text-[clamp(15px,3vw,34px)]
 
                           font-black
 
@@ -473,15 +521,14 @@ export default function Hero() {
 
                         <p
                           className="
-                          mt-2 sm:mt-3
+                          mt-2
 
                           text-[8px]
-                          min-[380px]:text-[9px]
-                          sm:text-xs
+                          sm:text-[10px]
 
                           uppercase
 
-                          tracking-[0.14em]
+                          tracking-[0.12em]
 
                           text-white/65
 

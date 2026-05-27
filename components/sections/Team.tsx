@@ -1,6 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Playfair_Display } from "next/font/google";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+});
 
 type TeamMember = {
   name: string;
@@ -15,11 +21,13 @@ export default function Team() {
       role: "BHMS",
       image: "/team/doc1.jpg",
     },
+
     {
       name: "Dr. Swathi Malathi",
       role: "BHMS",
       image: "/team/doc2.jpg",
     },
+
     {
       name: "Dr. Ananth",
       role: "BHMS",
@@ -37,7 +45,7 @@ export default function Team() {
       className="
         relative overflow-hidden
 
-        py-24 md:py-28 lg:py-32
+        py-28 md:py-32 lg:py-36
 
         bg-gradient-to-b
         from-blue-50
@@ -45,7 +53,7 @@ export default function Team() {
         to-blue-50
       "
     >
-      {/* BACKGROUND GLOW */}
+      {/* BACKGROUND GLOWS */}
 
       <div
         className="
@@ -75,7 +83,7 @@ export default function Team() {
         "
       />
 
-      {/* GRID BG */}
+      {/* GRID */}
 
       <div
         className="
@@ -89,23 +97,31 @@ export default function Team() {
         "
       />
 
+      {/* CONTAINER */}
+
       <div
         className="
           relative z-10
 
-          max-w-7xl mx-auto
+          w-full
 
-          px-5 sm:px-6 md:px-10 lg:px-16
+          px-5
+          sm:px-8
+          md:px-12
+          lg:px-20
+          xl:px-28
+          2xl:px-36
+          3xl:px-44
         "
       >
         {/* HEADER */}
 
-        <div className="text-center mb-16 lg:mb-20">
+        <div className="text-center mb-18 lg:mb-24">
           <div
             className="
               inline-flex items-center gap-2
 
-              px-5 py-2
+              px-5 py-2.5
 
               rounded-full
 
@@ -119,73 +135,67 @@ export default function Team() {
 
               shadow-lg
 
-              mb-6
+              mb-7
             "
           >
-            ✨ Medical Team
+            ✨ Medical Experts
           </div>
 
           <h2
             className="
-              text-4xl md:text-5xl lg:text-6xl
+              leading-[0.95]
 
-              font-black
+              tracking-[-0.04em]
 
-              tracking-tight
+              text-[clamp(38px,6vw,84px)]
 
-              leading-tight
+              font-[800]
 
-              text-transparent bg-clip-text
-
-              bg-gradient-to-r
-              from-blue-950
-              via-blue-800
-              to-blue-950
+              text-blue-950
             "
           >
-            Supporting Medical Team
+            <span className="block">
+              Meet Our
+            </span>
+
+            <span
+              className={`
+                block
+
+                italic
+
+                text-transparent bg-clip-text
+
+                bg-gradient-to-r
+                from-blue-900
+                via-blue-700
+                to-blue-900
+
+                ${playfair.className}
+              `}
+            >
+              Medical Experts
+            </span>
           </h2>
-
-          <p
-            className="
-              mt-6
-
-              text-gray-600
-
-              max-w-2xl
-
-              mx-auto
-
-              leading-relaxed
-
-              text-base md:text-lg
-            "
-          >
-            A compassionate team dedicated to
-            delivering personalized homoeopathic
-            care with professionalism, precision,
-            and patient-centered healing.
-          </p>
         </div>
 
-        {/* MOBILE + TABLET */}
+        {/* MOBILE HYBRID LAYOUT */}
 
         <div className="md:hidden">
+          {/* TOP TWO */}
+
           <div
             className="
-              flex flex-wrap
-              justify-center
+              grid grid-cols-2
 
-              gap-x-5
-              gap-y-6
+              gap-5
 
-              w-full
-              max-w-[650px]
+              max-w-[560px]
 
               mx-auto
             "
           >
-            {team.map((member, i) => (
+            {team.slice(0, 2).map((member, i) => (
               <motion.div
                 key={member.name}
                 initial={{ opacity: 0, y: 40 }}
@@ -196,27 +206,42 @@ export default function Team() {
                 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -6 }}
-                className={`
+                className="
                   group relative
 
-                  flex-1
-
-                  basis-[42%]
-
-                  min-w-[170px]
-                  max-w-[240px]
-
-                  ${
-                    i === 2
-                      ? "mx-auto"
-                      : ""
-                  }
-                `}
+                  w-full
+                "
               >
                 <Card member={member} mobile />
               </motion.div>
             ))}
           </div>
+
+          {/* THIRD CENTERED */}
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.6,
+              delay: 0.3,
+            }}
+            viewport={{ once: true }}
+            whileHover={{ y: -6 }}
+            className="
+              group relative
+
+              mt-5
+
+              w-[48%]
+
+              min-w-[170px]
+
+              mx-auto
+            "
+          >
+            <Card member={team[2]} mobile />
+          </motion.div>
         </div>
 
         {/* DESKTOP */}
@@ -227,7 +252,9 @@ export default function Team() {
 
             md:grid-cols-3
 
-            gap-8 lg:gap-10
+            gap-8
+            lg:gap-10
+            xl:gap-14
 
             justify-items-center
           "
@@ -247,7 +274,9 @@ export default function Team() {
                 group relative
 
                 w-full
-                max-w-[300px]
+
+                max-w-[360px]
+                xl:max-w-[400px]
               "
             >
               <Card member={member} />
@@ -276,7 +305,7 @@ function Card({
         className="
           absolute inset-0
 
-          rounded-[32px]
+          rounded-[36px]
 
           bg-gradient-to-br
           from-blue-200/40
@@ -299,17 +328,17 @@ function Card({
         className="
           relative overflow-hidden
 
-          rounded-[32px]
+          rounded-[36px]
 
-          bg-white/75
+          bg-white/80
 
           backdrop-blur-2xl
 
-          border border-white/50
+          border border-white/60
 
           shadow-[0_20px_60px_rgba(0,0,0,0.08)]
 
-          hover:shadow-[0_30px_80px_rgba(0,0,0,0.14)]
+          hover:shadow-[0_35px_90px_rgba(0,0,0,0.14)]
 
           transition-all duration-500
 
@@ -322,13 +351,32 @@ function Card({
           className="
             absolute top-0 left-0
 
-            w-full h-24
+            w-full h-28
 
             bg-gradient-to-b
-            from-white/60
+            from-white/70
             to-transparent
 
             pointer-events-none
+          "
+        />
+
+        {/* GOLD LIGHT */}
+
+        <div
+          className="
+            absolute
+
+            top-[-40px]
+            right-[-20px]
+
+            w-32 h-32
+
+            rounded-full
+
+            bg-yellow-100/40
+
+            blur-3xl
           "
         />
 
@@ -341,7 +389,7 @@ function Card({
             ${
               mobile
                 ? "px-4 py-5"
-                : "px-6 py-7 md:px-7 md:py-8"
+                : "px-7 py-9 lg:px-8 lg:py-10"
             }
           `}
         >
@@ -361,7 +409,7 @@ function Card({
                 via-white
                 to-yellow-200
 
-                shadow-xl
+                shadow-2xl
               "
             >
               <img
@@ -370,8 +418,8 @@ function Card({
                 className={`
                   ${
                     mobile
-                      ? "w-20 h-20"
-                      : "w-28 h-28 md:w-32 md:h-32"
+                      ? "w-24 h-24"
+                      : "w-32 h-32 xl:w-36 xl:h-36"
                   }
 
                   rounded-full
@@ -384,7 +432,7 @@ function Card({
 
                   transition duration-700
 
-                  group-hover:scale-[1.04]
+                  group-hover:scale-[1.05]
                 `}
               />
             </div>
@@ -392,25 +440,33 @@ function Card({
 
           {/* NAME */}
 
-          <h4
-            className={`
-              ${
-                mobile
-                  ? "mt-4 text-[15px]"
-                  : "mt-6 text-xl"
-              }
+          <div
+            className="
+              min-h-[56px]
 
-              font-bold
-
-              tracking-tight
-
-              leading-snug
-
-              text-blue-950
-            `}
+              flex items-center justify-center
+            "
           >
-            {member.name}
-          </h4>
+            <h4
+              className={`
+                ${
+                  mobile
+                    ? "mt-5 text-[17px]"
+                    : "mt-7 text-2xl"
+                }
+
+                font-bold
+
+                tracking-[-0.03em]
+
+                leading-snug
+
+                text-blue-950
+              `}
+            >
+              {member.name}
+            </h4>
+          </div>
 
           {/* ROLE */}
 
@@ -418,8 +474,8 @@ function Card({
             className={`
               ${
                 mobile
-                  ? "mt-2 text-xs px-3 py-1.5"
-                  : "mt-3 text-sm px-4 py-2"
+                  ? "mt-3 text-sm px-4 py-2"
+                  : "mt-4 text-sm px-5 py-2.5"
               }
 
               inline-flex items-center justify-center
@@ -438,15 +494,15 @@ function Card({
             {member.role}
           </div>
 
-          {/* BOTTOM LINE */}
+          {/* LINE */}
 
           <div
             className="
-              mt-5 mx-auto
+              mt-6 mx-auto
 
               h-[2px]
 
-              w-14
+              w-16
 
               rounded-full
 
@@ -455,7 +511,7 @@ function Card({
               via-yellow-300
               to-blue-400
 
-              group-hover:w-24
+              group-hover:w-28
 
               transition-all duration-500
             "

@@ -28,7 +28,7 @@ export default function Clinics() {
       name: "Kachiguda",
 
       embed:
-        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3807.4440056832527!2d78.48828152390595!3d17.390467002718903!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb99cf9a706d95%3A0x8e6867e70f8356d9!2sSai%20Clinic%20Ayurvedic%20And%20Homoeopathy!5e0!3m2!1sen!2sin!4v1776079550952!5m2!1sen!2sin",
+        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3807.4440056832527!2d78.48828152390595!3d17.390467002718903!2m3!1f0!2f0!2f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb99cf9a706d95%3A0x8e6867e70f8356d9!2sSai%20Clinic%20Ayurvedic%20And%20Homoeopathy!5e0!3m2!1sen!2sin!4v1776079550952!5m2!1sen!2sin",
 
       link:
         "https://www.google.com/maps?q=17.3904670,78.4882815",
@@ -81,11 +81,21 @@ export default function Clinics() {
       "
       />
 
+      {/* CONTAINER */}
+
       <div
         className="
         relative z-10
-        max-w-7xl mx-auto
-        px-4 sm:px-6 md:px-10 lg:px-20
+
+        w-full
+
+        px-5
+        sm:px-8
+        md:px-12
+        lg:px-20
+        xl:px-28
+        2xl:px-36
+        3xl:px-44
       "
       >
         {/* HEADER */}
@@ -164,8 +174,11 @@ export default function Clinics() {
           grid-cols-1
           min-[750px]:grid-cols-2
           min-[1100px]:grid-cols-3
+          2xl:grid-cols-3
 
-          gap-5 lg:gap-8
+          gap-5
+          lg:gap-8
+          2xl:gap-10
 
           items-stretch
         "
@@ -256,7 +269,7 @@ export default function Clinics() {
                     src={clinic.embed}
                     className="
                     w-full
-                    h-56 sm:h-60 md:h-64
+                    h-52 sm:h-60 md:h-64 xl:h-[290px]
                     border-0
                     grayscale-[0.15]
                     group-hover:grayscale-0
@@ -360,17 +373,23 @@ export default function Clinics() {
             once: true,
           }}
           className="
-          mt-20 md:mt-24
+          mt-24 md:mt-28
         "
         >
           <div
             className="
-            relative overflow-hidden
+            relative overflow-visible
+
             rounded-[40px]
+
             bg-white/70
+
             backdrop-blur-2xl
+
             border border-white/50
+
             shadow-[0_25px_80px_rgba(0,0,0,0.08)]
+
             p-5 sm:p-8 lg:p-12
           "
           >
@@ -383,6 +402,8 @@ export default function Clinics() {
             />
 
             <div className="relative z-10">
+              {/* HEADER */}
+
               <div className="text-center mb-10 md:mb-12">
                 <div
                   className="
@@ -401,10 +422,18 @@ export default function Clinics() {
 
                 <h3
                   className="
-                  text-3xl sm:text-4xl lg:text-5xl
+                  text-[clamp(34px,4vw,58px)]
+
                   font-black
-                  tracking-tight
+
+                  leading-[1.08]
+
+                  tracking-[-0.03em]
+
+                  pb-1
+
                   text-transparent bg-clip-text
+
                   bg-gradient-to-r
                   from-blue-950
                   via-blue-800
@@ -415,6 +444,8 @@ export default function Clinics() {
                 </h3>
               </div>
 
+              {/* TABLE */}
+
               <div
                 className="
                 overflow-hidden
@@ -422,21 +453,35 @@ export default function Clinics() {
                 border border-blue-100
               "
               >
+                {/* TABLE HEADER */}
+
                 <div
                   className="
-                  hidden md:grid
-                  grid-cols-2
+                  hidden md:flex
+                  items-center
+                  justify-between
+
                   bg-gradient-to-r
                   from-blue-900
                   to-blue-800
+
                   text-white
+
                   px-6 py-5
+
                   font-semibold
                 "
                 >
-                  <div>Clinic</div>
-                  <div>Consultation Timings</div>
+                  <div>
+                    Clinic
+                  </div>
+
+                  <div className="text-right">
+                    Consultation Timings
+                  </div>
                 </div>
+
+                {/* ROWS */}
 
                 {[
                   {
@@ -459,29 +504,52 @@ export default function Clinics() {
                   <div
                     key={i}
                     className="
-                    grid grid-cols-1 md:grid-cols-2
-                    gap-2 md:gap-0
-                    px-5 sm:px-6 py-5
+                    flex flex-col
+
+                    md:flex-row
+                    md:items-center
+                    md:justify-between
+
+                    gap-2 md:gap-6
+
+                    px-5 sm:px-6
+                    py-5
+
                     bg-white
+
                     border-t border-blue-50
+
                     hover:bg-blue-50/40
+
                     transition-all
                   "
                   >
+                    {/* CLINIC */}
+
                     <div
                       className="
                       font-semibold
                       text-blue-950
+
+                      shrink-0
                     "
                     >
                       {item.name}
                     </div>
 
+                    {/* TIME */}
+
                     <div
                       className="
                       text-gray-600
+
                       font-medium
-                      text-sm sm:text-base
+
+                      text-sm lg:text-base
+
+                      md:text-right
+
+                      leading-relaxed
                     "
                     >
                       {item.time}

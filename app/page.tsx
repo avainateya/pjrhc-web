@@ -16,7 +16,8 @@ export default function Home() {
       <Team />
       <WhyChooseUs />
       <Clinics />
-      <Appointments />
+            <Appointments />
+
       <Footer />
     </>
   );

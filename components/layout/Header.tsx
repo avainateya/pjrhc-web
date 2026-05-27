@@ -12,8 +12,11 @@ const playfair = Playfair_Display({
 });
 
 export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [active, setActive] = useState<string>("");
+  const [menuOpen, setMenuOpen] =
+    useState(false);
+
+  const [active, setActive] =
+    useState<string>("");
 
   const navItems = [
     "Our Physician",
@@ -22,30 +25,45 @@ export default function Header() {
     "Clinics",
   ];
 
-  const isAtHero = () => window.scrollY < 100;
+  const isAtHero = () =>
+    window.scrollY < 100;
 
   useEffect(() => {
-    const sections = document.querySelectorAll("section[id]");
+    const sections =
+      document.querySelectorAll(
+        "section[id]"
+      );
 
     const handleScroll = () => {
       if (isAtHero()) setActive("");
     };
 
-    window.addEventListener("scroll", handleScroll);
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActive(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: "-45% 0px -45% 0px",
-        threshold: 0,
-      }
+    window.addEventListener(
+      "scroll",
+      handleScroll
     );
+
+    const observer =
+      new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (
+              entry.isIntersecting
+            ) {
+              setActive(
+                entry.target.id
+              );
+            }
+          });
+        },
+
+        {
+          rootMargin:
+            "-45% 0px -45% 0px",
+
+          threshold: 0,
+        }
+      );
 
     sections.forEach((section) =>
       observer.observe(section)
@@ -53,7 +71,11 @@ export default function Header() {
 
     return () => {
       observer.disconnect();
-      window.removeEventListener("scroll", handleScroll);
+
+      window.removeEventListener(
+        "scroll",
+        handleScroll
+      );
     };
   }, []);
 
@@ -63,69 +85,75 @@ export default function Header() {
 
       <div
         className="
-          hidden min-[900px]:block
+        hidden min-[900px]:block
 
-          bg-white/85
+        bg-white/85
 
-          backdrop-blur-2xl
+        backdrop-blur-2xl
 
-          border-b border-blue-100/80
+        border-b border-blue-100/80
 
-          shadow-[0_10px_40px_rgba(0,0,0,0.06)]
-        "
+        shadow-[0_10px_40px_rgba(0,0,0,0.06)]
+      "
       >
         <div
           className="
-            max-w-7xl mx-auto
+          w-full
 
-            flex items-center justify-between
+          flex items-center justify-between
 
-            px-6 xl:px-8
+          px-5
+          sm:px-8
+          md:px-12
+          lg:px-20
+          xl:px-28
+          2xl:px-36
+          3xl:px-44
 
-            py-3
-          "
+          py-3
+        "
         >
           {/* LOGO */}
 
           <a
             href="#"
             className="
-              flex items-center gap-4
+            flex items-center gap-4
 
-              shrink-0
-            "
+            shrink-0
+          "
           >
             <div
               className="
-                relative
+              relative
 
-                w-12 h-12
+              w-12 h-12
 
-                rounded-full
+              rounded-full
 
-                flex items-center justify-center
+              flex items-center justify-center
 
-                bg-gradient-to-br
-                from-blue-50
-                to-white
+              bg-gradient-to-br
+              from-blue-50
+              to-white
 
-                border border-blue-200
+              border border-blue-200
 
-                text-blue-700
+              text-blue-700
 
-                shadow-md
-              "
+              shadow-md
+            "
             >
               <div
                 className="
-                  absolute inset-0
+                absolute inset-0
 
-                  rounded-full
+                rounded-full
 
-                  bg-gradient-to-br
-                  from-blue-400/10
-                  to-transparent
-                "
+                bg-gradient-to-br
+                from-blue-400/10
+                to-transparent
+              "
               />
 
               <GiCaduceus className="w-7 h-7 relative z-10" />
@@ -134,38 +162,38 @@ export default function Header() {
             <div className="leading-tight">
               <span
                 className={`
-                  ${playfair.className}
+                ${playfair.className}
 
-                  block
+                block
 
-                  text-lg xl:text-xl
+                text-lg xl:text-[22px]
 
-                  font-semibold
+                font-semibold
 
-                  tracking-[0.3px]
+                tracking-[0.3px]
 
-                  text-[#071739]
+                text-[#071739]
 
-                  whitespace-nowrap
-                `}
+                whitespace-nowrap
+              `}
               >
                 Dr. P. Jagan Mohan Rao
               </span>
 
               <span
                 className="
-                  block
+                block
 
-                  text-[11px]
+                text-[11px]
 
-                  text-blue-700
+                text-blue-700
 
-                  tracking-[3px]
+                tracking-[3px]
 
-                  uppercase
+                uppercase
 
-                  font-medium
-                "
+                font-medium
+              "
               >
                 Homoeo Clinic
               </span>
@@ -176,18 +204,21 @@ export default function Header() {
 
           <nav
             className="
-              flex items-center
+            flex items-center
 
-              gap-5 xl:gap-7
+            gap-4
+            xl:gap-6
+            2xl:gap-8
 
-              text-gray-700
+            text-gray-700
 
-              font-medium
-            "
+            font-medium
+          "
           >
             {navItems.map((item) => {
               const id =
-                item === "Why Choose Us"
+                item ===
+                "Why Choose Us"
                   ? "why choose us"
                   : item.toLowerCase();
 
@@ -196,44 +227,45 @@ export default function Header() {
                   key={item}
                   href={`#${id}`}
                   className={`
-                    relative
+                  relative
 
-                    text-[15px]
-                    xl:text-[17px]
+                  text-[15px]
+                  xl:text-[16px]
+                  2xl:text-[17px]
 
-                    transition-all duration-300
+                  transition-all duration-300
 
-                    hover:text-blue-700
+                  hover:text-blue-700
 
-                    whitespace-nowrap
+                  whitespace-nowrap
 
-                    ${
-                      active === id
-                        ? "text-blue-700 font-semibold"
-                        : ""
-                    }
-                  `}
+                  ${
+                    active === id
+                      ? "text-blue-700 font-semibold"
+                      : ""
+                  }
+                `}
                 >
                   {item}
 
                   <span
                     className={`
-                      absolute left-0 -bottom-1
+                    absolute left-0 -bottom-1
 
-                      h-[2px]
+                    h-[2px]
 
-                      bg-gradient-to-r
-                      from-blue-600
-                      to-blue-800
+                    bg-gradient-to-r
+                    from-blue-600
+                    to-blue-800
 
-                      transition-all duration-300
+                    transition-all duration-300
 
-                      ${
-                        active === id
-                          ? "w-full"
-                          : "w-0 hover:w-full"
-                      }
-                    `}
+                    ${
+                      active === id
+                        ? "w-full"
+                        : "w-0 hover:w-full"
+                    }
+                  `}
                   />
                 </a>
               );
@@ -244,30 +276,30 @@ export default function Header() {
             <a
               href="#appointment"
               className="
-                ml-2
+              ml-2
 
-                bg-gradient-to-r
-                from-blue-700
-                to-blue-900
+              bg-gradient-to-r
+              from-blue-700
+              to-blue-900
 
-                hover:from-blue-800
-                hover:to-blue-950
+              hover:from-blue-800
+              hover:to-blue-950
 
-                text-white
+              text-white
 
-                text-[15px]
+              text-[15px]
 
-                py-2.5
-                px-5
+              py-2.5
+              px-5
 
-                rounded-full
+              rounded-2xl
 
-                whitespace-nowrap
+              whitespace-nowrap
 
-                shadow-[0_10px_30px_rgba(37,99,235,0.25)]
+              shadow-[0_10px_30px_rgba(37,99,235,0.25)]
 
-                transition-all duration-300
-              "
+              transition-all duration-300
+            "
             >
               Book Appointment
             </a>
@@ -280,40 +312,40 @@ export default function Header() {
       <div className="min-[900px]:hidden px-3 pt-3">
         <div
           className="
-            flex items-center justify-between
+          flex items-center justify-between
 
-            bg-white/85
+          bg-white/85
 
-            backdrop-blur-2xl
+          backdrop-blur-2xl
 
-            rounded-2xl
+          rounded-2xl
 
-            border border-white/40
+          border border-white/40
 
-            px-4 py-3
+          px-4 py-3
 
-            shadow-[0_10px_40px_rgba(0,0,0,0.08)]
-          "
+          shadow-[0_10px_40px_rgba(0,0,0,0.08)]
+        "
         >
           {/* LEFT */}
 
           <div className="flex items-center gap-3">
             <div
               className="
-                w-10 h-10
+              w-10 h-10
 
-                flex items-center justify-center
+              flex items-center justify-center
 
-                rounded-full
+              rounded-full
 
-                border border-blue-200
+              border border-blue-200
 
-                bg-gradient-to-br
-                from-blue-50
-                to-white
+              bg-gradient-to-br
+              from-blue-50
+              to-white
 
-                text-blue-700
-              "
+              text-blue-700
+            "
             >
               <GiCaduceus className="w-5 h-5" />
             </div>
@@ -321,28 +353,28 @@ export default function Header() {
             <div>
               <p
                 className={`
-                  ${playfair.className}
+                ${playfair.className}
 
-                  text-sm
+                text-sm
 
-                  font-semibold
+                font-semibold
 
-                  text-[#071739]
-                `}
+                text-[#071739]
+              `}
               >
                 Dr. P. Jagan Mohan Rao
               </p>
 
               <p
                 className="
-                  text-[10px]
+                text-[10px]
 
-                  text-blue-700
+                text-blue-700
 
-                  uppercase
+                uppercase
 
-                  tracking-[2px]
-                "
+                tracking-[2px]
+              "
               >
                 Homoeo Clinic
               </p>
@@ -356,16 +388,16 @@ export default function Header() {
               setMenuOpen(!menuOpen)
             }
             className="
-              p-2.5
+            p-2.5
 
-              rounded-xl
+            rounded-xl
 
-              bg-blue-50
+            bg-blue-50
 
-              text-blue-700
+            text-blue-700
 
-              border border-blue-100
-            "
+            border border-blue-100
+          "
           >
             {menuOpen ? (
               <HiXMark className="w-5 h-5" />
@@ -384,8 +416,14 @@ export default function Header() {
           }}
           animate={
             menuOpen
-              ? { opacity: 1, y: 0 }
-              : { opacity: 0, y: -20 }
+              ? {
+                  opacity: 1,
+                  y: 0,
+                }
+              : {
+                  opacity: 0,
+                  y: -20,
+                }
           }
           transition={{
             duration: 0.25,
@@ -395,24 +433,25 @@ export default function Header() {
           {menuOpen && (
             <div
               className="
-                bg-white/95
+              bg-white/95
 
-                backdrop-blur-2xl
+              backdrop-blur-2xl
 
-                rounded-2xl
+              rounded-2xl
 
-                border border-white/40
+              border border-white/40
 
-                shadow-[0_20px_50px_rgba(0,0,0,0.08)]
+              shadow-[0_20px_50px_rgba(0,0,0,0.08)]
 
-                p-4
+              p-4
 
-                space-y-2
-              "
+              space-y-2
+            "
             >
               {navItems.map((item) => {
                 const id =
-                  item === "Why Choose Us"
+                  item ===
+                  "Why Choose Us"
                     ? "why choose us"
                     : item.toLowerCase();
 
@@ -421,26 +460,29 @@ export default function Header() {
                     key={item}
                     href={`#${id}`}
                     onClick={() => {
-                      setMenuOpen(false);
+                      setMenuOpen(
+                        false
+                      );
+
                       setActive(id);
                     }}
                     className={`
-                      block
+                    block
 
-                      text-center
+                    text-center
 
-                      py-3
+                    py-3
 
-                      rounded-xl
+                    rounded-xl
 
-                      transition-all duration-300
+                    transition-all duration-300
 
-                      ${
-                        active === id
-                          ? "bg-blue-100 text-blue-700 font-medium"
-                          : "text-gray-700 hover:bg-blue-50"
-                      }
-                    `}
+                    ${
+                      active === id
+                        ? "bg-blue-100 text-blue-700 font-medium"
+                        : "text-gray-700 hover:bg-blue-50"
+                    }
+                  `}
                   >
                     {item}
                   </a>
@@ -453,24 +495,24 @@ export default function Header() {
                   setMenuOpen(false)
                 }
                 className="
-                  block
+                block
 
-                  text-center
+                text-center
 
-                  bg-gradient-to-r
-                  from-blue-700
-                  to-blue-900
+                bg-gradient-to-r
+                from-blue-700
+                to-blue-900
 
-                  text-white
+                text-white
 
-                  py-3
+                py-3
 
-                  rounded-xl
+                rounded-xl
 
-                  font-medium
+                font-medium
 
-                  shadow-[0_10px_30px_rgba(37,99,235,0.2)]
-                "
+                shadow-[0_10px_30px_rgba(37,99,235,0.2)]
+              "
               >
                 Book Appointment
               </a>
