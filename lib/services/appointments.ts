@@ -1,5 +1,3 @@
-// lib/appointments.ts
-
 import { db } from "@/lib/firebase";
 
 import {
@@ -9,10 +7,22 @@ import {
   getDocs,
   query,
   where,
+  deleteDoc,
+  doc,
 } from "firebase/firestore";
 
-import { google } from "googleapis";
+import { google }
+from "googleapis";
+
 import dayjs from "dayjs";
+
+import customParseFormat
+from "dayjs/plugin/customParseFormat";
+
+dayjs.extend(
+  customParseFormat
+);
+
 
 /* ======================================================
    CONFIG
@@ -20,265 +30,510 @@ import dayjs from "dayjs";
 
 const MAX_PER_SLOT = 3;
 
-const auth = new google.auth.GoogleAuth({
-  credentials: {
-    client_email: process.env.GOOGLE_CLIENT_EMAIL,
+const auth =
+  new google.auth.GoogleAuth({
+    credentials: {
 
-    private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(
-      /\\n/g,
-      "\n"
-    ),
-  },
+      client_email:
+        process.env
+          .GOOGLE_CLIENT_EMAIL,
 
-  scopes: ["https://www.googleapis.com/auth/calendar"],
-});
+      private_key:
+        process.env
+          .GOOGLE_PRIVATE_KEY
+          ?.replace(
+            /\\n/g,
+            "\n"
+          ),
+    },
 
-const calendar = google.calendar({
-  version: "v3",
-  auth,
-});
+    scopes: [
+      "https://www.googleapis.com/auth/calendar",
+    ],
+  });
+
+const calendar =
+  google.calendar({
+    version: "v3",
+    auth,
+  });
+
+const CALENDAR_ID =
+  process.env
+    .GOOGLE_CALENDAR_ID!;
+
+
+/* ======================================================
+   AUTO CLEANUP OLD APPOINTMENTS
+====================================================== */
+
+const cleanupOldAppointments =
+  async () => {
+
+    try {
+
+      const snapshot =
+        await getDocs(
+          collection(
+            db,
+            "appointments"
+          )
+        );
+
+      const oneWeekAgo =
+        dayjs().subtract(
+          7,
+          "day"
+        );
+
+      for (const item of snapshot.docs) {
+
+        const data =
+          item.data();
+
+        if (
+          !data.date
+        ) {
+          continue;
+        }
+
+        const appointmentDate =
+          dayjs(data.date);
+
+        if (
+          appointmentDate.isBefore(
+            oneWeekAgo
+          )
+        ) {
+
+          // DELETE GOOGLE EVENT
+
+          if (
+            data.googleEventId
+          ) {
+
+            try {
+
+              await calendar.events.delete({
+                calendarId:
+                  CALENDAR_ID,
+
+                eventId:
+                  data.googleEventId,
+              });
+
+            } catch (err) {
+
+              console.error(
+                "Calendar Cleanup Error:",
+                err
+              );
+            }
+          }
+
+          // DELETE FIRESTORE DOC
+
+          await deleteDoc(
+            doc(
+              db,
+              "appointments",
+              item.id
+            )
+          );
+        }
+      }
+
+    } catch (err) {
+
+      console.error(
+        "Cleanup Error:",
+        err
+      );
+    }
+  };
+
 
 /* ======================================================
    CREATE APPOINTMENT
 ====================================================== */
 
-export const createAppointment = async (data: any) => {
-  try {
-    const {
-      name,
-      phone,
-      date,
-      time,
-      branch,
-    } = data;
+export const createAppointment =
+  async (data: any) => {
 
-    /* ======================================================
-       VALIDATION
-    ====================================================== */
+    try {
 
-    if (
-      !name ||
-      !phone ||
-      !date ||
-      !time ||
-      !branch
-    ) {
-      throw new Error("Please fill all fields");
-    }
+      await cleanupOldAppointments();
 
-    if (!/^[0-9]{10}$/.test(phone)) {
-      throw new Error("Invalid phone number");
-    }
+      const {
+        name,
+        phone,
+        date,
+        time,
+        branch,
+      } = data;
 
-    /* ======================================================
-       CHECK SLOT LIMIT
-    ====================================================== */
 
-    const q = query(
-      collection(db, "appointments"),
+      /* ======================================================
+         VALIDATION
+      ====================================================== */
 
-      where("date", "==", date),
+      if (
+        !name ||
+        !phone ||
+        !date ||
+        !time ||
+        !branch
+      ) {
 
-      where("time", "==", time),
+        return {
+          success: false,
 
-      where("branch", "==", branch)
-    );
+          error:
+            "Please fill all fields",
+        };
+      }
 
-    const snapshot = await getDocs(q);
+      if (
+        !/^[0-9]{10}$/.test(
+          phone
+        )
+      ) {
 
-    if (snapshot.size >= MAX_PER_SLOT) {
-      throw new Error("Slot full");
-    }
+        return {
+          success: false,
 
-    /* ======================================================
-       PREVENT DUPLICATE BOOKING
-    ====================================================== */
+          error:
+            "Invalid phone number",
+        };
+      }
 
-    const duplicateQuery = query(
-      collection(db, "appointments"),
 
-      where("phone", "==", phone),
+      /* ======================================================
+         SLOT CHECK
+      ====================================================== */
 
-      where("date", "==", date)
-    );
+      const slotQuery = query(
+        collection(
+          db,
+          "appointments"
+        ),
 
-    const duplicateSnap = await getDocs(
-      duplicateQuery
-    );
+        where(
+          "date",
+          "==",
+          date
+        ),
 
-    if (!duplicateSnap.empty) {
-      throw new Error(
-        "You already booked for this date"
+        where(
+          "time",
+          "==",
+          time
+        ),
+
+        where(
+          "branch",
+          "==",
+          branch
+        )
       );
-    }
 
-    /* ======================================================
-       CREATE DATE TIME
-    ====================================================== */
+      const slotSnap =
+        await getDocs(
+          slotQuery
+        );
 
-    const startDateTime = dayjs(
-      `${date} ${time}`
-    );
+      if (
+        slotSnap.size >=
+        MAX_PER_SLOT
+      ) {
 
-    const endDateTime = startDateTime.add(
-      30,
-      "minute"
-    );
+        return {
+          success: false,
 
-    /* ======================================================
-       CHECK GOOGLE CALENDAR CONFLICTS
-    ====================================================== */
+          error:
+            "This slot is fully booked. Please choose another time.",
+        };
+      }
 
-    const calendarEvents =
-      await calendar.events.list({
-        calendarId: "primary",
 
-        timeMin: startDateTime.toISOString(),
+      /* ======================================================
+         DUPLICATE CHECK
+      ====================================================== */
 
-        timeMax: endDateTime.toISOString(),
+      const duplicateQuery =
+        query(
+          collection(
+            db,
+            "appointments"
+          ),
 
-        singleEvents: true,
+          where(
+            "phone",
+            "==",
+            phone
+          ),
 
-        orderBy: "startTime",
-      });
+          where(
+            "date",
+            "==",
+            date
+          )
+        );
 
-    const conflictingEvents =
-      calendarEvents.data.items || [];
+      const duplicateSnap =
+        await getDocs(
+          duplicateQuery
+        );
 
-    if (conflictingEvents.length > 0) {
-      throw new Error(
-        "Doctor unavailable at this time"
-      );
-    }
+      if (
+        !duplicateSnap.empty
+      ) {
 
-    /* ======================================================
-       CREATE GOOGLE CALENDAR EVENT
-    ====================================================== */
+        return {
+          success: false,
 
-    const calendarEvent =
-      await calendar.events.insert({
-        calendarId: "primary",
+          error:
+            "You already booked an appointment for this date.",
+        };
+      }
 
-        requestBody: {
-          summary: `Appointment - ${name}`,
 
-          description: `
+      /* ======================================================
+         CREATE DATETIME
+      ====================================================== */
+
+      const startDateTime =
+        dayjs(
+          `${date} ${time}`,
+          "YYYY-MM-DD hh:mm A"
+        );
+
+      const endDateTime =
+        startDateTime.add(
+          30,
+          "minute"
+        );
+
+      if (
+        !startDateTime.isValid()
+      ) {
+
+        return {
+          success: false,
+
+          error:
+            "Invalid appointment time.",
+        };
+      }
+
+
+      /* ======================================================
+         GOOGLE CALENDAR OVERLAP CHECK
+      ====================================================== */
+
+      const calendarEvents =
+        await calendar.events.list({
+          calendarId:
+            CALENDAR_ID,
+
+          timeMin:
+            startDateTime
+              .subtract(
+                2,
+                "hour"
+              )
+              .toISOString(),
+
+          timeMax:
+            endDateTime
+              .add(
+                2,
+                "hour"
+              )
+              .toISOString(),
+
+          singleEvents: true,
+
+          orderBy:
+            "startTime",
+        });
+
+      const conflictingEvents =
+        (
+          calendarEvents
+            .data.items || []
+        ).filter((event) => {
+
+          if (
+            event.status ===
+            "cancelled"
+          ) {
+
+            return false;
+          }
+
+          if (
+            !event.start
+              ?.dateTime ||
+            !event.end
+              ?.dateTime
+          ) {
+
+            return false;
+          }
+
+          const eventStart =
+            dayjs(
+              event.start
+                .dateTime
+            );
+
+          const eventEnd =
+            dayjs(
+              event.end
+                .dateTime
+            );
+
+          return (
+            startDateTime.isBefore(
+              eventEnd
+            ) &&
+            endDateTime.isAfter(
+              eventStart
+            )
+          );
+        });
+
+      if (
+        conflictingEvents.length >
+        0
+      ) {
+
+        return {
+          success: false,
+
+          error:
+            "Doctor unavailable at this time. Please select another slot.",
+        };
+      }
+
+
+      /* ======================================================
+         CREATE GOOGLE CALENDAR EVENT
+      ====================================================== */
+
+      const calendarEvent =
+        await calendar.events.insert({
+          calendarId:
+            CALENDAR_ID,
+
+          requestBody: {
+
+            summary:
+              `Appointment - ${name}`,
+
+            description: `
 Patient Name: ${name}
 Phone: ${phone}
 Branch: ${branch}
-          `,
+            `,
 
-          start: {
-            dateTime:
-              startDateTime.toISOString(),
+            start: {
+              dateTime:
+                startDateTime.toISOString(),
 
-            timeZone: "Asia/Kolkata",
+              timeZone:
+                "Asia/Kolkata",
+            },
+
+            end: {
+              dateTime:
+                endDateTime.toISOString(),
+
+              timeZone:
+                "Asia/Kolkata",
+            },
+
+            reminders: {
+              useDefault: false,
+
+              overrides: [
+                {
+                  method:
+                    "popup",
+
+                  minutes: 60,
+                },
+              ],
+            },
           },
+        });
 
-          end: {
-            dateTime:
-              endDateTime.toISOString(),
 
-            timeZone: "Asia/Kolkata",
-          },
+      /* ======================================================
+         SAVE FIRESTORE
+      ====================================================== */
 
-          reminders: {
-            useDefault: false,
+      const docRef =
+        await addDoc(
+          collection(
+            db,
+            "appointments"
+          ),
 
-            overrides: [
-              {
-                method: "popup",
-                minutes: 60,
-              },
-            ],
-          },
-        },
-      });
+          {
+            name:
+              name.trim(),
 
-    /* ======================================================
-       SAVE TO FIRESTORE
-    ====================================================== */
+            phone,
 
-    const docRef = await addDoc(
-      collection(db, "appointments"),
-      {
-        name: name.trim(),
+            date,
 
-        phone,
+            time,
 
-        date,
+            branch,
 
-        time,
+            status:
+              "confirmed",
 
-        branch,
+            googleEventId:
+              calendarEvent
+                .data.id,
 
-        status: "confirmed",
+            createdAt:
+              serverTimestamp(),
+          }
+        );
 
-        googleEventId:
-          calendarEvent.data.id,
 
-        createdAt: serverTimestamp(),
-      }
-    );
-
-    /* ======================================================
-       SUCCESS
-    ====================================================== */
-
-    return {
-      success: true,
-
-      appointmentId: docRef.id,
-
-      calendarEventId:
-        calendarEvent.data.id,
-    };
-
-  } catch (error: any) {
-    console.error(
-      "Appointment Error:",
-      error
-    );
-
-    return {
-      success: false,
-
-      error: error.message,
-    };
-  }
-};
-
-/* ======================================================
-   RESCHEDULE APPOINTMENT
-====================================================== */
-
-export const rescheduleAppointment =
-  async ({
-    appointmentId,
-    newDate,
-    newTime,
-  }: any) => {
-    try {
-      console.log(
-        "Reschedule:",
-        appointmentId,
-        newDate,
-        newTime
-      );
-
-      // later:
-      // update firestore
-      // update google calendar event
-      // send whatsapp msg
+      /* ======================================================
+         SUCCESS
+      ====================================================== */
 
       return {
         success: true,
+
+        appointmentId:
+          docRef.id,
+
+        calendarEventId:
+          calendarEvent
+            .data.id,
       };
 
-    } catch (error: any) {
+    } catch (err: any) {
+
+      console.error(
+        "Appointment Error:",
+        err
+      );
+
       return {
         success: false,
-        error: error.message,
+
+        error:
+          err.message ||
+          "Server error",
       };
     }
   };

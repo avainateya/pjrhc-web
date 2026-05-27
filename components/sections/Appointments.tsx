@@ -3,12 +3,10 @@
 import { useState } from "react";
 
 export default function Appointments() {
-
   const filterPastTimes = (
     selectedDate: string,
     slots: string[]
   ) => {
-
     const now = new Date();
 
     const today = now
@@ -20,7 +18,6 @@ export default function Appointments() {
     }
 
     return slots.filter((slot) => {
-
       const [time, modifier] =
         slot.split(" ");
 
@@ -59,13 +56,11 @@ export default function Appointments() {
     branch: string,
     date: string
   ) => {
-
     if (!branch || !date) return [];
 
     const day = new Date(date).getDay();
 
     if (branch === "Online") {
-
       return filterPastTimes(date, [
         "9:00 AM",
         "11:00 AM",
@@ -75,9 +70,7 @@ export default function Appointments() {
     }
 
     if (day === 0) {
-
       if (branch === "Retibowli") {
-
         return filterPastTimes(date, [
           "6:00 PM",
           "7:00 PM",
@@ -99,7 +92,6 @@ export default function Appointments() {
       string,
       string[]
     > = {
-
       Narsing: [
         "10:30 AM",
         "11:30 AM",
@@ -143,6 +135,9 @@ export default function Appointments() {
       "idle" | "success" | "error"
     >("idle");
 
+  const [errorMessage, setErrorMessage] =
+    useState("");
+
   const [branchOpen, setBranchOpen] =
     useState(false);
 
@@ -163,7 +158,6 @@ export default function Appointments() {
   const handleSubmit = async (
     e: any
   ) => {
-
     e.preventDefault();
 
     if (
@@ -181,8 +175,9 @@ export default function Appointments() {
 
     setStatus("idle");
 
-    try {
+    setErrorMessage("");
 
+    try {
       const res = await fetch(
         "/api/appointments",
         {
@@ -199,9 +194,12 @@ export default function Appointments() {
 
       const data = await res.json();
 
-      if (data.success) {
+      console.log(data);
 
+      if (data.success) {
         setStatus("success");
+
+        setErrorMessage("");
 
         setForm({
           name: "",
@@ -214,15 +212,20 @@ export default function Appointments() {
         setBranchOpen(false);
 
         setTimeOpen(false);
-
       } else {
+        setErrorMessage(
+          data.error ||
+            "Something went wrong"
+        );
 
         setStatus("error");
       }
-
     } catch (err) {
-
       console.error(err);
+
+      setErrorMessage(
+        "Server error. Please try again."
+      );
 
       setStatus("error");
     }
@@ -236,7 +239,7 @@ export default function Appointments() {
       className="
       relative overflow-hidden
 
-      py-24 lg:py-32
+      py-20 lg:py-24
 
       bg-gradient-to-br
       from-blue-950
@@ -291,12 +294,15 @@ export default function Appointments() {
         3xl:px-44
       "
       >
-
         <div
           className="
           relative
 
           overflow-visible
+
+          max-w-5xl
+
+          mx-auto
 
           bg-gradient-to-br
           from-blue-950/90
@@ -318,11 +324,9 @@ export default function Appointments() {
           shadow-[0_20px_80px_rgba(0,0,0,0.5)]
         "
         >
-
           {/* HEADER */}
 
           <div className="text-center mb-10">
-
             <div
               className="
               inline-block
@@ -384,7 +388,6 @@ export default function Appointments() {
               Secure your appointment with our
               specialists in just a few clicks.
             </p>
-
           </div>
 
           {/* FORM */}
@@ -397,7 +400,6 @@ export default function Appointments() {
             grid gap-5 lg:gap-6 md:grid-cols-2
           "
           >
-
             {/* NAME */}
 
             <div>
@@ -496,7 +498,6 @@ export default function Appointments() {
                   min={today}
 
                   onClick={(e: any) => {
-
                     e.target.showPicker?.();
 
                     setBranchOpen(false);
@@ -524,13 +525,6 @@ export default function Appointments() {
                   cursor-pointer
 
                   [color-scheme:dark]
-
-                  [&::-webkit-calendar-picker-indicator]:absolute
-                  [&::-webkit-calendar-picker-indicator]:right-4
-                  [&::-webkit-calendar-picker-indicator]:opacity-0
-                  [&::-webkit-calendar-picker-indicator]:cursor-pointer
-                  [&::-webkit-calendar-picker-indicator]:w-full
-                  [&::-webkit-calendar-picker-indicator]:h-full
                 "
                   value={form.date}
 
@@ -561,14 +555,12 @@ export default function Appointments() {
             {/* BRANCH */}
 
             <div className="relative z-50">
-
               <label className="text-sm text-white/80">
                 Select Branch
               </label>
 
               <div
                 onClick={() => {
-
                   setBranchOpen(
                     !branchOpen
                   );
@@ -642,12 +634,10 @@ export default function Appointments() {
               `}
               >
                 {branches.map((b) => (
-
                   <div
                     key={b}
 
                     onClick={() => {
-
                       setForm({
                         ...form,
                         branch: b,
@@ -680,19 +670,16 @@ export default function Appointments() {
             {/* TIME SLOT */}
 
             <div className="md:col-span-2 relative z-40">
-
               <label className="text-sm text-white/80">
                 Time Slot
               </label>
 
               <div
                 onClick={() => {
-
                   if (
                     form.branch &&
                     form.date
                   ) {
-
                     setTimeOpen(
                       !timeOpen
                     );
@@ -771,7 +758,6 @@ export default function Appointments() {
                   form.branch,
                   form.date
                 ).length === 0 ? (
-
                   <div
                     className="
                     px-5 py-4
@@ -781,19 +767,15 @@ export default function Appointments() {
                   >
                     No slots available
                   </div>
-
                 ) : (
-
                   getSlots(
                     form.branch,
                     form.date
                   ).map((slot) => (
-
                     <div
                       key={slot}
 
                       onClick={() => {
-
                         setForm({
                           ...form,
                           time: slot,
@@ -862,6 +844,67 @@ export default function Appointments() {
                 : "Confirm Appointment"}
             </button>
 
+            {/* SUCCESS */}
+
+            {status === "success" && (
+              <div
+                className="
+                md:col-span-2
+
+                mt-2
+
+                rounded-2xl
+
+                border border-emerald-400/20
+
+                bg-emerald-400/10
+
+                px-5 py-4
+
+                text-center
+
+                text-emerald-200
+
+                backdrop-blur-xl
+              "
+              >
+                <p className="font-semibold text-lg">
+                  Appointment Booked Successfully ✨
+                </p>
+
+                <p className="mt-1 text-sm text-emerald-100/80">
+                  Our team will contact you shortly.
+                </p>
+              </div>
+            )}
+
+            {/* ERROR */}
+
+            {status === "error" && (
+              <div
+                className="
+                md:col-span-2
+
+                mt-2
+
+                rounded-2xl
+
+                border border-red-400/20
+
+                bg-red-400/10
+
+                px-5 py-4
+
+                text-center
+
+                text-red-200
+
+                backdrop-blur-xl
+              "
+              >
+                {errorMessage}
+              </div>
+            )}
           </form>
         </div>
       </div>

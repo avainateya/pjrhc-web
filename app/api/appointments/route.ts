@@ -16,34 +16,51 @@ import {
 } from "firebase/firestore";
 
 
+// ======================================================
 // GET APPOINTMENTS
+// ======================================================
 
 export async function GET() {
 
   try {
 
     const q = query(
-      collection(db, "appointments"),
-      orderBy("createdAt", "desc")
+      collection(
+        db,
+        "appointments"
+      ),
+
+      orderBy(
+        "createdAt",
+        "desc"
+      )
     );
 
     const snapshot =
       await getDocs(q);
 
     const data =
-      snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      snapshot.docs.map(
+        (doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })
+      );
 
-    return NextResponse.json(data);
+    return NextResponse.json(
+      data
+    );
 
   } catch (err) {
 
+    console.error(err);
+
     return NextResponse.json(
       {
+        success: false,
+
         error:
-          "Failed to fetch",
+          "Failed to fetch appointments",
       },
 
       {
@@ -54,7 +71,9 @@ export async function GET() {
 }
 
 
+// ======================================================
 // CREATE APPOINTMENT
+// ======================================================
 
 export async function POST(
   req: Request
@@ -86,6 +105,8 @@ export async function POST(
 
       return NextResponse.json(
         {
+          success: false,
+
           error:
             "All fields required",
         },
@@ -100,11 +121,15 @@ export async function POST(
     // PHONE VALIDATION
 
     if (
-      !/^[6-9]\d{9}$/.test(phone)
+      !/^[6-9]\d{9}$/.test(
+        phone
+      )
     ) {
 
       return NextResponse.json(
         {
+          success: false,
+
           error:
             "Invalid phone number",
         },
@@ -116,38 +141,25 @@ export async function POST(
     }
 
 
-    // SAVE APPOINTMENT
+    // CREATE APPOINTMENT
 
-    const id =
-      await createAppointment(body);
-
-
-    // SEND WHATSAPP
-
-    await sendWhatsApp(body);
+    const result =
+      await createAppointment(
+        body
+      );
 
 
-    return NextResponse.json({
-      success: true,
-      id,
+    // FAILED
 
-      message:
-        "Appointment booked",
-    });
-
-  } catch (err: any) {
-
-    console.error(err);
-
-    if (
-      err.message ===
-      "Slot full"
-    ) {
+    if (!result.success) {
 
       return NextResponse.json(
         {
+          success: false,
+
           error:
-            "Slot full. Choose another time.",
+            result.error ||
+            "Appointment failed",
         },
 
         {
@@ -156,9 +168,54 @@ export async function POST(
       );
     }
 
+
+    // SEND WHATSAPP
+
+    try {
+
+      await sendWhatsApp(
+        body
+      );
+
+    } catch (
+      whatsappError
+    ) {
+
+      console.error(
+        "WhatsApp Error:",
+        whatsappError
+      );
+    }
+
+
+    // SUCCESS
+
+    return NextResponse.json({
+      success: true,
+
+      id:
+        result.appointmentId,
+
+      calendarEventId:
+        result.calendarEventId,
+
+      message:
+        "Appointment booked successfully",
+    });
+
+  } catch (err: any) {
+
+    console.error(
+      "API Error:",
+      err
+    );
+
     return NextResponse.json(
       {
+        success: false,
+
         error:
+          err.message ||
           "Server error",
       },
 
