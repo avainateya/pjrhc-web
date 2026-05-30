@@ -14,14 +14,7 @@ import {
 import { google }
 from "googleapis";
 
-import dayjs from "dayjs";
-
-import customParseFormat
-from "dayjs/plugin/customParseFormat";
-
-dayjs.extend(
-  customParseFormat
-);
+import moment from "moment-timezone";
 
 
 /* ======================================================
@@ -81,10 +74,12 @@ const cleanupOldAppointments =
         );
 
       const oneWeekAgo =
-        dayjs().subtract(
-          7,
-          "day"
-        );
+        moment()
+          .tz("Asia/Kolkata")
+          .subtract(
+            7,
+            "days"
+          );
 
       for (const item of snapshot.docs) {
 
@@ -98,7 +93,11 @@ const cleanupOldAppointments =
         }
 
         const appointmentDate =
-          dayjs(data.date);
+          moment.tz(
+            data.date,
+            "YYYY-MM-DD",
+            "Asia/Kolkata"
+          );
 
         if (
           appointmentDate.isBefore(
@@ -106,7 +105,7 @@ const cleanupOldAppointments =
           )
         ) {
 
-          // DELETE GOOGLE EVENT
+          // DELETE CALENDAR EVENT
 
           if (
             data.googleEventId
@@ -257,62 +256,23 @@ export const createAppointment =
 
 
       /* ======================================================
-         DUPLICATE CHECK
-      ====================================================== */
-
-      const duplicateQuery =
-        query(
-          collection(
-            db,
-            "appointments"
-          ),
-
-          where(
-            "phone",
-            "==",
-            phone
-          ),
-
-          where(
-            "date",
-            "==",
-            date
-          )
-        );
-
-      const duplicateSnap =
-        await getDocs(
-          duplicateQuery
-        );
-
-      if (
-        !duplicateSnap.empty
-      ) {
-
-        return {
-          success: false,
-
-          error:
-            "You already booked an appointment for this date.",
-        };
-      }
-
-
-      /* ======================================================
-         CREATE DATETIME
+         CREATE IST DATETIME
       ====================================================== */
 
       const startDateTime =
-        dayjs(
+        moment.tz(
           `${date} ${time}`,
-          "YYYY-MM-DD hh:mm A"
+          "YYYY-MM-DD hh:mm A",
+          "Asia/Kolkata"
         );
 
       const endDateTime =
-        startDateTime.add(
-          30,
-          "minute"
-        );
+        startDateTime
+          .clone()
+          .add(
+            30,
+            "minutes"
+          );
 
       if (
         !startDateTime.isValid()
@@ -338,17 +298,19 @@ export const createAppointment =
 
           timeMin:
             startDateTime
+              .clone()
               .subtract(
                 2,
-                "hour"
+                "hours"
               )
               .toISOString(),
 
           timeMax:
             endDateTime
+              .clone()
               .add(
                 2,
-                "hour"
+                "hours"
               )
               .toISOString(),
 
@@ -383,15 +345,17 @@ export const createAppointment =
           }
 
           const eventStart =
-            dayjs(
+            moment.tz(
               event.start
-                .dateTime
+                .dateTime,
+              "Asia/Kolkata"
             );
 
           const eventEnd =
-            dayjs(
+            moment.tz(
               event.end
-                .dateTime
+                .dateTime,
+              "Asia/Kolkata"
             );
 
           return (
@@ -413,7 +377,7 @@ export const createAppointment =
           success: false,
 
           error:
-            "Doctor unavailable at this time. Please select another slot.",
+            "Doctor is unavailable at this time. Please select another slot.",
         };
       }
 
@@ -440,7 +404,9 @@ Branch: ${branch}
 
             start: {
               dateTime:
-                startDateTime.toISOString(),
+                startDateTime.format(
+                  "YYYY-MM-DDTHH:mm:ss"
+                ),
 
               timeZone:
                 "Asia/Kolkata",
@@ -448,7 +414,9 @@ Branch: ${branch}
 
             end: {
               dateTime:
-                endDateTime.toISOString(),
+                endDateTime.format(
+                  "YYYY-MM-DDTHH:mm:ss"
+                ),
 
               timeZone:
                 "Asia/Kolkata",
